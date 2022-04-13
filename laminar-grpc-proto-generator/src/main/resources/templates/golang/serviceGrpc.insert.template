@@ -1,0 +1,16 @@
+response, err := executor.RequestExecutor.Execute@title@(ctx, request)
+	if err != nil {
+		logger.Error("Execute@title@ request failed", zap.Error(err))
+		metrics.Metrics.PushToErrorCounterMetrics()(metrics.@title@_Error_Metrics,err,ctx)
+		response = &fs.@service_response@{
+             Status: @response_status_failure@
+        }
+
+		onErrorResponse := hook.@onerror_hook@Executor.OnError(ctx, request, nil, err)
+		if onErrorResponse != nil {
+            response = onErrorResponse
+         }
+	    return response
+	}
+
+	//On Respponse logic can be added here

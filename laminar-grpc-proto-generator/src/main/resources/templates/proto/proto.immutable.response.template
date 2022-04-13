@@ -1,0 +1,6 @@
+message @responseName@ {
+    Status status = 1;
+    int32 count = 2;
+    repeated Attribs attribs = 3;
+    @res_body@
+}

@@ -1,0 +1,71 @@
+package @java_package@;
+
+import lombok.Data;
+
+@Data
+public class Configuration {
+
+    @Data
+    public static final class Server {
+        private Integer port;
+
+        private String apiHook;
+
+        private String startupHook;
+    }
+
+    @Data
+    public static final class Prometheus {
+        private Boolean enabled;
+
+        private Integer port;
+    }
+
+    @Data
+    public static final class TemporalWorker {
+        private Boolean enabled;
+
+        private String namespace;
+
+        private String address;
+
+        private String taskQueue;
+    }
+
+    @Data
+    public static final class Proto {
+        private String serviceName;
+
+        private String graphqlUri;
+
+        private String protoPackage;
+
+        private String javaPackage;
+
+        private String goPackage;
+
+        private String codeUrl;
+
+        private String javaGeneratePath;
+
+        private String javaOverridePath;
+
+        private String goGeneratePath;
+
+        private String goOverridePath;
+
+        private String graphqlGeneratePath;
+
+        private String protoGeneratePath;
+
+    }
+
+    private Server server;
+
+    private Prometheus prometheus;
+
+    private TemporalWorker temporalWorker;
+
+    private Proto proto;
+
+}

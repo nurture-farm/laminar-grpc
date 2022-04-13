@@ -1,0 +1,1 @@
+    prometheus.MustRegister(@title@_Metrics)

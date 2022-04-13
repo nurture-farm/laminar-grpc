@@ -1,0 +1,22 @@
+package @java_package@.graphql;
+
+import com.google.inject.AbstractModule;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import @java_package@.proto.@microservice_name@Grpc;
+
+public class GRpcClientModule extends AbstractModule {
+
+    private String grpcServiceAddress;
+
+    public GRpcClientModule(String grpcServiceAddress) {
+        this.grpcServiceAddress = grpcServiceAddress;
+    }
+
+    @Override
+    protected void configure() {
+        ManagedChannel channel = ManagedChannelBuilder.forTarget(grpcServiceAddress).usePlaintext().build();
+        @microservice_name@Grpc.@microservice_name@FutureStub futureStub = @microservice_name@Grpc.newFutureStub(channel);
+        bind(@microservice_name@Grpc.@microservice_name@FutureStub.class).toInstance(futureStub);
+    }
+}

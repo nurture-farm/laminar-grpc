@@ -1,0 +1,91 @@
+package @java_package@;
+
+import com.google.protobuf.ByteString;
+import farm.nurture.infra.util.Logger;
+import farm.nurture.infra.util.LoggerFactory;
+import farm.nurture.infra.util.StringUtils;
+import farm.nurture.laminar.core.util.JsonUtil;
+import @java_package@.proto.*;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+public class GRpcClient {
+
+    private final static Logger LOG = LoggerFactory.getLogger(GRpcClient.class);
+
+    public static void main(String[] args) throws Exception {
+        String address = null;
+        if ( args.length > 0 ) address = args[0];
+        if(StringUtils.isEmpty(address)) {
+            int port = getPortFromConfigFile();
+            address = "127.0.0.1:" + port;
+        }
+
+        @microservice_name@Grpc.@microservice_name@BlockingStub blockingStub;
+        ManagedChannel channel = ManagedChannelBuilder.forTarget(address).usePlaintext().build();
+
+        System.out.print("Enter the que ry names as defined in title of app_config: ");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String queryname = reader.readLine();
+
+            try {
+                blockingStub = @microservice_name@Grpc.newBlockingStub(channel);
+
+                /** You can comment the MULTI, this will not compile if AddFarmer and JoinTable services are absent. */
+                if ( queryname.equals("Multi") ) {
+
+                    /**
+                    List<String> params = new ArrayList<>();
+                    System.out.print("Enter FarmerId: "); params.add(reader.readLine());System.out.print("Enter FarmerName: "); params.add(reader.readLine());System.out.print("Enter Email: "); params.add(reader.readLine());System.out.print("Enter Epochs: "); params.add(reader.readLine());
+
+                        MultiResponses resp = blockingStub.execute( MultiRequests.newBuilder().setOnTxn(false)
+                            .addRequest(
+                                    Request.newBuilder().setReqAddFarmer(
+                                            AddFarmerRequest.newBuilder().setFarmerId(Integer.valueOf(params.get(0))). setFarmerName(params.get(1)). setEmail(params.get(2)). setEpochs(params.get(3)).build()
+                                    ).build())
+                            .addRequest(
+                                    Request.newBuilder().setReqJoinTable(
+                                            JoinTableRequest.newBuilder().build()
+                                    ).build() )
+                            .build()
+                    );
+                    System.out.println("Multi  Responses  :" + resp.getResponseCount() );
+                    System.out.println("Multi  Responses  :" + resp.getResponse(0).getResAddFarmer().getStatus() );
+                    System.out.println("Multi  Responses  :" + resp.getResponse(1).getResJoinTable().getStatus() );
+                    */
+
+                } else
+
+    @insertservice@
+
+    @selectservice@
+
+                {
+                    System.out.println("Service name not found: " + queryname );
+                }
+
+            } finally {
+                channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
+            }
+    }
+
+    private static int getPortFromConfigFile() throws IOException {
+        String configFilePath = System.getProperty("config_file");
+        if(StringUtils.isEmpty(configFilePath)) {
+            LOG.error("Config file is not given");
+            System.exit(1);
+        }
+
+        Configuration config = JsonUtil.deserialize(Files.readAllBytes(Paths.get(configFilePath)), Configuration.class);
+        return config.getServer().getPort();
+    }
+}

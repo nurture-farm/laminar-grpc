@@ -1,0 +1,12 @@
+
+    public void onRequest@service_name@ ( ReqRes<@service_request@,@service_response@> currentStep,
+        List<ReqRes<Request,Response>> previousSteps, ServiceContext context ) {
+
+        System.out.println("onInput:" );
+    }
+
+    public void onResponse@service_name@ ( ReqRes<@service_request@,@service_response@> currentStep,
+        List<ReqRes<Request,Response>> previousSteps, ServiceContext context ) {
+
+        System.out.println("onInput:" );
+    }

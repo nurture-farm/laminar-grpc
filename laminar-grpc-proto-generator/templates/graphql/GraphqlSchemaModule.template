@@ -1,0 +1,29 @@
+package @java_package@.graphql;
+
+import com.google.api.graphql.rejoiner.GrpcSchemaModule;
+import com.google.api.graphql.rejoiner.SchemaModule;
+import com.google.common.collect.ImmutableList;
+import graphql.schema.GraphQLFieldDefinition;
+import @java_package@.proto.@microservice_name@Grpc;
+
+/**
+ * A Laminar GraphQL {@link SchemaModule} backed by a gRPC service.
+ * https://code.nurture.farm/platform/laminargrpc/blob/master/src/main/proto/laminar.proto
+ */
+public final class GraphqlSchemaModule extends GrpcSchemaModule {
+
+    @Override
+    protected void configureSchema() {
+        //Select queries
+        ImmutableList<GraphQLFieldDefinition> queryList =
+                serviceToFields(@microservice_name@Grpc.@microservice_name@FutureStub.class,
+                        ImmutableList.of(@queryList@));
+        addQueryList(queryList);
+
+        //IUD queries
+        ImmutableList<GraphQLFieldDefinition> mutationList =
+                serviceToFields(@microservice_name@Grpc.@microservice_name@FutureStub.class,
+                        ImmutableList.of(@mutationList@));
+        addMutationList(mutationList);
+    }
+}

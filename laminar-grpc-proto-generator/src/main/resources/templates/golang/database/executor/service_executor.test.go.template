@@ -1,0 +1,38 @@
+package executor_test
+
+import (
+	"context"
+	"database/sql"
+	"errors"
+	"testing"
+
+	fs @go_proto_path@
+	"@code_url@@namespace@/@service_name@/zerotouch/golang/database/executor"
+	"@code_url@@namespace@/@service_name@/zerotouch/golang/database/mappers"
+	"github.com/DATA-DOG/go-sqlmock"
+	entsql "github.com/facebook/ent/dialect/sql"
+	"github.com/stretchr/testify/assert"
+	"github.com/spf13/viper"
+	"fmt"
+	"go.uber.org/zap"
+)
+
+var Mock sqlmock.Sqlmock
+
+func init() {
+	var db *sql.DB
+	var err error
+	db, Mock, err = sqlmock.New()
+	if err != nil {
+		panic(err)
+	}
+	executor.Driver.Driver = entsql.OpenDB("mysql", db)
+	viper.SetConfigType("json")
+    viper.SetConfigFile("../../../../config" + "/config.json")
+    viper.AutomaticEnv()
+    if err := viper.ReadInConfig(); err != nil {
+        fmt.Println("VIPER config read error",zap.Error(err))
+    }
+}
+
+@insert_test_functions@

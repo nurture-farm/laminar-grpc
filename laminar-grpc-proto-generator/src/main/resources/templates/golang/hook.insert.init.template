@@ -1,0 +1,6 @@
+	@service_request@Executor = &Generic@service_request@Executor{
+        @service_request@Interface: &@service_request@Controller{},
+    }
+	Bulk@service_request@Executor = &Generic@service_request@ExecutorBulk{
+        @service_request@BulkInterface: &Bulk@service_request@Controller{},
+    }

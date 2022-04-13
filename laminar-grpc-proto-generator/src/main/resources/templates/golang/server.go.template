@@ -1,0 +1,27 @@
+package setup
+
+import (
+	fs @go_proto_path@
+	@service_import@
+	"context"
+)
+
+type s@service_name@ struct {
+	fs.Unimplemented@service_name@Server
+	@activities_name@
+	@workflow_client@
+}
+
+var @service_name@ *s@service_name@ = &s@service_name@{
+    @workflow_client_set@
+}
+
+@insert_temporalsetup@
+
+@insertservice@
+
+func (fs *s@service_name@) Execute(ctx context.Context, request *fs.MultiRequests) (*fs.MultiResponses, error) {
+
+    // TO-DO
+	return nil, nil
+}

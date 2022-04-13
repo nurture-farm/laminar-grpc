@@ -1,0 +1,6 @@
+var (
+	@title@_Metrics = prometheus.NewCounterVec(prometheus.CounterOpts{
+		Name: "NF_@service_acronym@_@metric_name@",
+		Help: "Sumary metrics for @title@",
+	},[]string{"nservice","ntype","nerror"})
+)

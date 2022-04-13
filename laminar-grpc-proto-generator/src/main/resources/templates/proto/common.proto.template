@@ -1,0 +1,53 @@
+message RequestHeaders {
+    string prefferedUserName = 1;
+    string clientId = 2;
+    string tracingId = 3;
+    bool traceDetails = 4;
+    enum LANGUAGE {
+      English = 0;
+      Hindi = 2;
+    }
+    LANGUAGE language = 5;
+
+    float latitude = 6;
+    float longitude = 7;
+    float accuracy = 8;
+
+    enum COUNTRY {
+      India = 0;
+      Australia = 2;
+    }
+    COUNTRY country = 9;
+
+    string experimentId = 10;
+    repeated Attribs attribs = 11;
+
+    string authToken = 12;
+    string appToken = 13;
+
+}
+
+message Attribs {
+	string key = 1;
+	string value = 2;
+}
+
+message Status {
+  StatusCode status = 1;
+  repeated string  error_messages = 2;
+  int32 internal_error_code = 3;
+}
+
+enum StatusCode {
+  SUCCESS = 0;
+  NOT_FOUND = 1;
+  ZERO_RESULTS = 2;
+  DUPLICATE = 3;
+  LIMIT_EXCEEDED = 4;
+  INVALID_REQUEST = 5;
+  TEMPORARILY_SUSPENDED = 6;
+  OVER_USAGE_LIMIT = 7;
+  REQUEST_DENIED = 8;
+  UNKNOWN_ERROR = 9;
+  DB_FAILURE = 10;
+}

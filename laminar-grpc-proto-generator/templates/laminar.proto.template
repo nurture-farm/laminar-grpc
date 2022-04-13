@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package @proto_package@;
+
+option java_multiple_files = true;
+option java_package = "@java_package@.proto";
+option go_package = "@go_package@";
+
+message RequestHeaders {
+    string clientId = 1;
+    string tracingId = 2;
+    bool traceDetails = 3;
+    enum LANGUAGE {
+      English = 0;
+      HINDI = 2;
+    }
+    LANGUAGE language = 4;
+
+    float latitude = 5;
+    float longitude = 6;
+    float accuracy = 7;
+
+    enum COUNTRY {
+      India = 0;
+      Australia = 2;
+    }
+    COUNTRY country = 8;
+
+    string experimentId = 9;
+    repeated Attribs attribs = 10;
+}
+
+message Attribs {
+	string key = 1;
+	string value = 2;
+}
+
+message Status {
+  StatusCode status = 1;
+  repeated string  error_messages = 2;
+  int32 internal_error_code = 3;
+}
+
+enum StatusCode {
+  SUCCESS = 0;
+  NOT_FOUND = 1;
+  ZERO_RESULTS = 2;
+  DUPLICATE = 3;
+  LIMIT_EXCEEDED = 4;
+  INVALID_REQUEST = 5;
+  TEMPORARILY_SUSPENDED = 6;
+  OVER_USAGE_LIMIT = 7;
+  REQUEST_DENIED = 8;
+  UNKNOWN_ERROR = 9;
+  DB_FAILURE = 10;
+}
+
+@callable_methods@
+
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+				 Multi Queries 					
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */ 
+message MultiRequests {
+    bool onTxn = 1;
+    repeated Request request = 2;
+}
+
+message Request {
+    string index = 1;
+    oneof ARequest {
+        @oneof_requests@
+	}
+}
+
+message MultiResponses {
+    Status status = 1;
+    repeated Response response = 2;
+}
+
+message Response {
+    string index = 1;
+    Status status = 2;
+    oneof AResponse {
+        @oneof_responses@
+	}
+}
+service @microservice_name@ {
+    @callable_services@
+	rpc Execute (MultiRequests) returns (MultiResponses) {}
+}

@@ -1,0 +1,6 @@
+func @title@Args(model *models.@service_request@VO) []interface{}{
+
+	var args []interface{}
+	@voVariablesAppend@
+	return args
+}

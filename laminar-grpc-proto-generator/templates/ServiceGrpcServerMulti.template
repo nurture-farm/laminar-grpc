@@ -1,0 +1,31 @@
+                if ( req.hasReq@service_name@()) {
+
+                    LOG.info("Multi service execution - @service_name@");
+                    @service_request@ aRequest = req.getReq@service_name@();
+
+                    AbstractBackendController.ReqRes<@service_request@, @service_response@> reqres =
+                        new AbstractBackendController.ReqRes<>(aRequest);
+
+                    if (pipelines != null) {
+                        for (AbstractBackendController pipeline : pipelines)
+                            pipeline.onRequest@service_name@(reqres, prevSteps, context);
+                    }
+
+                    if ( ! context.manualOverride && reqres.response == null) {
+                        @grpc_impl@ @service_name@(writer, reqres, prevSteps, context);
+                    }
+
+                    if (pipelines != null) {
+                        for (AbstractBackendController pipeline : pipelines)
+                            pipeline.onResponse@service_name@(reqres, prevSteps, context);
+                    }
+
+                    if ( null == reqres.response)  reqres.response = @service_response@.newBuilder().setStatus(
+                          Status.newBuilder().setStatus(StatusCode.UNKNOWN_ERROR).addErrorMessages("Null response reveived").build()).build();
+
+                    Response aRes = Response.newBuilder().setRes@service_name@(reqres.response).build();
+                    replyB.addResponse(aRes);
+
+                    prevSteps.add(new AbstractBackendController.ReqRes<Request,Response>(req,aRes));
+
+                } else

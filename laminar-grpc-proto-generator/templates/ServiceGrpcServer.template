@@ -1,0 +1,208 @@
+package @java_package@;
+
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
+
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
+import io.grpc.stub.StreamObserver;
+
+import farm.nurture.infra.metrics.IMetricSummary;
+import farm.nurture.infra.util.FileReaderUtil;
+import farm.nurture.infra.util.Logger;
+import farm.nurture.infra.util.LoggerFactory;
+import farm.nurture.infra.util.StringUtils;
+
+import farm.nurture.laminar.core.sql.dao.PoolFactory;
+import farm.nurture.laminar.core.sql.dao.WriteBase;
+import farm.nurture.laminar.core.util.CoreUtil;
+import farm.nurture.laminar.core.util.JsonUtil;
+import farm.nurture.laminar.core.util.Metrics;
+
+import @java_package@.dao.*;
+import @java_package@.proto.*;
+
+
+public class GRpcServer extends @microservice_name@Grpc.@microservice_name@ImplBase implements ServiceMethods {
+
+    private final static Logger LOG = LoggerFactory.getLogger(GRpcServer.class);
+    private static final boolean INFO_ENABLED = LOG.isInfoEnabled();
+    private static final boolean DEBUG_ENABLED = LOG.isDebugEnabled();
+    private static final Status OK = Status.newBuilder().setStatus(StatusCode.SUCCESS).build();
+
+    public GRpcServer()  {
+        super();
+    }
+
+    @insertservice@
+
+    @selectservice@
+
+    @Override
+    public void execute(MultiRequests request, StreamObserver<MultiResponses> responseObserver) {
+
+        MultiResponses.Builder replyB = executeInternal(request);
+
+        responseObserver.onNext(replyB.build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public MultiResponses.Builder executeInternal(MultiRequests request) {
+
+        int totalReqs = request.getRequestCount();
+        MultiResponses.Builder replyB = MultiResponses.newBuilder();
+        WriteBase writer = null;
+        ServiceContext context = new ServiceContext();
+        List<AbstractBackendController.ReqRes<Request,Response>> prevSteps = new ArrayList();
+
+        List<AbstractBackendController> pipelines = BackendControllerFactory.getInstance().pipelines;
+
+        try {
+            //LOG.info("Initializing database Transaction : " + request.getOnTxn() );
+            LOG.info( "Initializing database Transaction : {} and count is: {}" , request.getOnTxn(), totalReqs);
+            if ( request.getOnTxn() ) {
+                writer = new WriteBase();
+                writer.beginTransaction();
+            }
+
+            for ( int i=0; i<totalReqs; i++) {
+                Request req = request.getRequest(i);
+
+                @multiservice@
+
+                {
+                    System.out.println( "Transaction not supported ");
+                }
+            }
+
+            if ( null != writer ) {
+               writer.commitTransaction();
+               writer = null;
+            }
+
+        } catch (Exception ex) {
+
+            LOG.error("Error while executing the multi stmt" + ex.getMessage(), ex);
+
+        } finally {
+            if ( null != writer) {
+                try {
+                    writer.rollbackTransaction();
+                } catch(Exception ex) {
+                    LOG.error(String.valueOf(ex));
+                }
+                if ( INFO_ENABLED ) LOG.debug("Transactions rolled back.");
+            }
+        }
+
+        return replyB;
+    }
+
+
+   private static void startDB() {
+
+        System.out.println("Initializing DB Pool ...");
+        String configXml = null;
+        for ( String fileName : new String[] { "/etc/laminar/jdbc.conf", "etc/jdbc.conf", "jdbc.conf"} ) {
+            LOG.info("Scanning jdbc.conf file @ " + fileName);
+            File file = new File(fileName);
+            if ( file.exists() && file.canRead() ) {
+                configXml = FileReaderUtil.toString(file.getAbsolutePath());
+                break;
+            }
+        }
+
+        //read from classpath
+        if(null == configXml) {
+            configXml = CoreUtil.readAsString("jdbc.conf");
+        }
+
+        if (StringUtils.isEmpty(configXml)) {
+            LOG.error("Unable to load jdbc config");
+            System.exit(1);
+        }
+
+        try {
+            PoolFactory.getInstance().setup(configXml);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        startDB();
+        GRpcServer gServer = new GRpcServer();
+
+        String configFilePath = System.getProperty("config_file");
+        if(StringUtils.isEmpty(configFilePath)) {
+            LOG.error("Config file is not given");
+            System.exit(1);
+        }
+
+        Configuration config = JsonUtil.deserialize(Files.readAllBytes(Paths.get(configFilePath)), Configuration.class);
+        validateConfig(config);
+
+        String apiHookClass = config.getServer().getApiHook();
+        LOG.info( "API hook class:" + apiHookClass);
+        try {
+            Class clazz = Class.forName(apiHookClass);
+            AbstractBackendController instance = (AbstractBackendController) clazz.newInstance();
+            instance.services = gServer;
+            BackendControllerFactory.getInstance().register(instance);
+        } catch (Exception e) {
+            LOG.error("Error in adding API hook for config : {}", config, e);
+            System.exit(1);
+        }
+
+        String startupHookClass = config.getServer().getStartupHook();
+        LOG.info( "Startup hook class:" + startupHookClass);
+        try {
+            Class clazz = Class.forName(startupHookClass);
+            AbstractStartupHook instance = (AbstractStartupHook) clazz.newInstance();
+            instance.start();
+        } catch (Exception e) {
+            LOG.error("Error in adding Startup hook for config : {}", config, e);
+            System.exit(1);
+        }
+
+        int port = config.getServer().getPort();
+        Server server = ServerBuilder.forPort(port).addService(gServer).build().start();
+        LOG.info("Server started, listening on " + port);
+        server.awaitTermination();
+    }
+
+    private static void validateConfig(Configuration config) {
+        if(config.getServer() == null || config.getTemporalWorker() == null || config.getPrometheus() == null) {
+            LOG.error("server or temporal_worker or prometheus is not passed");
+            System.exit(1);
+        }
+
+        Configuration.Server serverConfig = config.getServer();
+        if(serverConfig.getPort() == null || StringUtils.isEmpty(serverConfig.getApiHook()) || StringUtils.isEmpty(serverConfig.getStartupHook())) {
+            LOG.error("Server configuration is not valid");
+            System.exit(1);
+        }
+
+        Configuration.Prometheus prometheusConfig = config.getPrometheus();
+        if(prometheusConfig.getEnabled() == null || (prometheusConfig.getEnabled() && prometheusConfig.getPort() == null)) {
+            LOG.error("Prometheus configuration is not valid");
+            System.exit(1);
+        }
+
+        Configuration.TemporalWorker workerConfig = config.getTemporalWorker();
+        if(workerConfig.getEnabled() == null || (workerConfig.getEnabled() && (StringUtils.isEmpty(workerConfig.getNamespace())
+                || StringUtils.isEmpty(workerConfig.getAddress()) || StringUtils.isEmpty(workerConfig.getTaskQueue())))) {
+            LOG.error("TemporalWorker configuration is not valid");
+            System.exit(1);
+        }
+    }
+
+}

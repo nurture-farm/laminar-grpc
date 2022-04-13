@@ -1,0 +1,18 @@
+func Execute@title@(ctx context.Context, request *fs.@service_request@) *fs.@service_response@ {
+
+	var err error
+	defer metrics.Metrics.PushToSummarytMetrics()(metrics.@title@_Metrics,"@title@",&err,ctx)
+	logger.Info("Serving @title@ request", zap.Any("request", request))
+
+	onRequestResponse := hook.@onrequest_hook@Executor.OnRequest(ctx, request)
+    if onRequestResponse != nil {
+        response := onRequestResponse
+        logger.Info("Skipping Execute@title@ request", zap.Any("request", request))
+        return response
+    }
+
+    @servicegrpc_insert@
+
+	logger.Info("Execute@title@ request served successfully!", zap.Any("request", request))
+	return @return_response@
+}

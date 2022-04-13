@@ -1,0 +1,66 @@
+package executor
+
+import (
+	"@code_url@@namespace@/@service_name@/zerotouch/golang/database/mappers"
+	@import_model@
+	"@code_url@@namespace@/@service_name@/zerotouch/golang/database"
+	fs @go_proto_path@
+	"context"
+	"database/sql"
+	@import_entsql@
+	"github.com/spf13/cast"
+	"go.uber.org/zap"
+	"strings"
+)
+
+type ServiceExecutor interface {
+@execute_insert_interface@
+}
+
+type GenericExecutor struct {
+	ServiceExecutor ServiceExecutor
+}
+
+type Executor struct {
+}
+
+var RequestExecutor *GenericExecutor
+
+@execute_insert_methods@
+
+func init() {
+	RequestExecutor = &GenericExecutor{
+		ServiceExecutor: &Executor{},
+	}
+}
+
+@execute_insert@
+
+
+func Execute(ctx context.Context, request *fs.MultiRequests) []error {
+/**
+	var response []error
+	var err error
+	multiRequest := request.Request
+	for _, customerRequest := range multiRequest {
+		addRequest := customerRequest.ARequest
+		switch addRequest.(type) {
+		case *fs.Request_ReqAddCustomer:
+			modifiedRequest := addRequest.(*fs.Request_ReqAddCustomer)
+			err = ExecuteAddCustomer(ctx, modifiedRequest.ReqAddCustomer)
+			break
+		case *fs.Request_ReqAddCustomerBulk:
+			modifiedRequest := addRequest.(*fs.Request_ReqAddCustomerBulk)
+			err = ExecuteAddCustomerBulk(ctx, modifiedRequest.ReqAddCustomerBulk)
+			break
+		default:
+			logger.Info("Unkown request type")
+			break
+		}
+		response = append(response, err)
+	}
+	return response
+ */
+	return nil;
+}
+

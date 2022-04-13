@@ -1,0 +1,64 @@
+package @java_package@.graphql;
+
+import com.google.api.graphql.rejoiner.GrpcSchemaModule;
+import com.google.api.graphql.rejoiner.Mutation;
+import com.google.api.graphql.rejoiner.Query;
+import com.google.api.graphql.rejoiner.SchemaModule;
+import com.google.common.collect.ImmutableList;
+import com.google.common.util.concurrent.SettableFuture;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.inject.Inject;
+import graphql.schema.DataFetchingEnvironment;
+import graphql.schema.GraphQLFieldDefinition;
+
+import farm.nurture.infra.util.StringUtils;
+import java.util.List;
+
+
+import @java_package@.proto.*;
+
+/**
+ * A Laminar GraphQL {@link SchemaModule} backed by a gRPC service.
+ * https://code.nurture.farm/platform/laminargrpc/blob/master/src/main/proto/laminar.proto
+ */
+public class GraphqlSchemaModule extends GrpcSchemaModule {
+
+    private static Status getErrorStatus ( String msg) {
+        if ( null == msg) msg = "Security error.";
+        return Status.newBuilder().setStatus(StatusCode.REQUEST_DENIED).
+                addErrorMessages(msg).build();
+    }
+
+    @Inject
+    @microservice_name@Grpc.@microservice_name@FutureStub futureClient;
+
+    @Override
+    protected void configureSchema() {
+
+        /**
+        //Select queries
+        ImmutableList<GraphQLFieldDefinition> queryList =
+                serviceToFields(@microservice_name@Grpc.@microservice_name@FutureStub.class,
+                        ImmutableList.of(@queryList@));
+        addQueryList(queryList);
+
+        //IUD queries
+        ImmutableList<GraphQLFieldDefinition> mutationList =
+                serviceToFields(@microservice_name@Grpc.@microservice_name@FutureStub.class,
+                        ImmutableList.of(@mutationList@));
+        addMutationList(mutationList);
+        */
+    }
+
+    static String errMsg = "Security check failure";
+
+    @overrideList@
+
+
+    private OAuthValidator.VerifyInput getVerifyInput(DataFetchingEnvironment environment, RequestHeaders reqHeaders) {
+        OAuthValidator.VerifyInput authAndAppToken = environment.getContext();
+        if ( null == authAndAppToken.authToken) authAndAppToken.authToken = reqHeaders.getAuthToken();
+        if ( null == authAndAppToken.appToken)  authAndAppToken.appToken = reqHeaders.getAppToken();
+        return authAndAppToken;
+    }
+}

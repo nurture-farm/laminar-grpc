@@ -1,0 +1,14 @@
+package @java_package@;
+
+import java.util.HashMap;
+
+public class ServiceContext {
+
+    private HashMap<String, Object> dataHolder = null;
+    public boolean manualOverride = false;
+
+    public HashMap<String, Object>  getDataHolder() {
+        if (null == dataHolder) dataHolder = new HashMap<>();
+        return dataHolder;
+    }
+}

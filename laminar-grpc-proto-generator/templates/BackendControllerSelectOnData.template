@@ -1,0 +1,10 @@
+
+    public void onData@service_name@ (
+        WriteBase writer,  List<@service_response@VO> data,
+        @service_response@.Builder responseBuilder,
+        ReqRes<@service_request@,@service_response@> currentStep,
+        List<ReqRes<Request,Response>> previousSteps,
+         ServiceContext context ) {
+
+        System.out.println("onInput:" );
+    }

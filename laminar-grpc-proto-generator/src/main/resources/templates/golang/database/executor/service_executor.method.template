@@ -1,0 +1,3 @@
+func (se *GenericExecutor) Execute@title@(ctx context.Context, request *fs.@service_request@) (*fs.@service_response@, error) {
+    return se.ServiceExecutor.Execute@title@(ctx, request)
+}

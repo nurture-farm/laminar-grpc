@@ -1,0 +1,14 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+If no select statement,   The compilation fails <<make start_grpc_server>>
+
+AbstractBackendController.java:7: error: package farm.nurture.farm.service.dao does not exist
+import farm.nurture.farm.service.dao.*;
+^
+/Users/abinashanurture.farm/projects/laminar-grpc/build/generated/src/main/java/farm/nurture/farm/service/GRpcServer.java:11: error: package farm.nurture.farm.service.dao does not exist
+import farm.nurture.farm.service.dao.*;
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+name: you want to send it 2 times.
+Can we replace the ? mark with @{name}  like syntax in app_config body.
+
+

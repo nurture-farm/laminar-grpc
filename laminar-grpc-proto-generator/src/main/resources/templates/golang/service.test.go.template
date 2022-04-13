@@ -1,0 +1,56 @@
+package service_test
+
+import (
+	"context"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+	fs @go_proto_path@
+	"testing"
+	"errors"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/spf13/viper"
+	"code.nurture.farm@namespace@/@service_name@/core/golang/hook"
+	"@code_url@@namespace@/@service_name@/zerotouch/golang/database/executor"
+	"@code_url@@namespace@/@service_name@/zerotouch/golang/service"
+	"@code_url@@namespace@/@service_name@/zerotouch/golang/metrics"
+	"fmt"
+	"go.uber.org/zap"
+)
+
+func init() {
+	viper.SetConfigType("json")
+	viper.SetConfigFile("../../../config" + "/config.json")
+	viper.AutomaticEnv()
+
+	if err := viper.ReadInConfig(); err != nil {
+		fmt.Println("VIPER config read error",zap.Error(err))
+	}
+}
+
+type ExecutorMock struct {
+	mock.Mock
+}
+
+type MetricsMock struct {
+	mock.Mock
+}
+
+@insert_mock_struct@
+
+func (ms *MetricsMock) PushToSummarytMetrics() func(*prometheus.SummaryVec, string, *error, context.Context) {
+	return func(request *prometheus.SummaryVec, methodName string, err *error, ctx context.Context) {
+
+		return
+	}
+}
+func (ms *MetricsMock) PushToErrorCounterMetrics() func(*prometheus.CounterVec, error, context.Context) {
+	return func(request *prometheus.CounterVec, err error, ctx context.Context) {
+		return
+	}
+}
+
+@insert_mock_hooks@
+
+@insert_mock_functions@
+
+@insert_test_functions@

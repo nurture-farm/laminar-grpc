@@ -1,0 +1,31 @@
+
+    @Override
+    public void execute@service_name@(@service_request@ request, StreamObserver<@service_response@> responseObserver) {
+         IMetricSummary metric = Metrics.getInstance().mTraffic;
+         boolean isOK = false;
+         long s = System.currentTimeMillis();
+
+         AbstractBackendController.ReqRes<@service_request@, @service_response@> reqres =
+            new AbstractBackendController.ReqRes(request);
+         ServiceContext context = new ServiceContext();
+
+         for (AbstractBackendController pipeline : BackendControllerFactory.getInstance().pipelines)
+             pipeline.onRequest@service_name@(reqres, null, context);
+
+         LOG.info("@service_name@ Manual mode: " + context.manualOverride );
+
+         if ( ! context.manualOverride && reqres.response == null) {
+             @grpc_impl@ @service_name@(null, reqres, null, context);
+         }
+
+         for (AbstractBackendController pipeline : BackendControllerFactory.getInstance().pipelines)
+            pipeline.onResponse@service_name@(reqres, null, context);
+
+         if ( reqres.response == null ) reqres.response = @service_response@.newBuilder().setStatus(
+                  Status.newBuilder().setStatus(StatusCode.UNKNOWN_ERROR).addErrorMessages("Null response reveived").build()).build();
+
+         responseObserver.onNext(reqres.response);
+         responseObserver.onCompleted();
+         isOK = reqres.response.getStatus().getStatus() == StatusCode.SUCCESS;
+         metric.observe( ( System.currentTimeMillis() - s), "@service_name@", (isOK ) ? "OK" : "KO" );
+     }

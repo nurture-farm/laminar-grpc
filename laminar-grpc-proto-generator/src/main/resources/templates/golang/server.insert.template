@@ -1,0 +1,4 @@
+func (fs *s@service_name@) Execute@title@(ctx context.Context, request *fs.@service_request@) (*fs.@service_response@, error) {
+
+	return @return_package@.Execute@title@(ctx, request)@return_nil@
+}

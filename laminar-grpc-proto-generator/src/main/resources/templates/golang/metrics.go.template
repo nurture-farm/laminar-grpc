@@ -1,0 +1,22 @@
+package metrics
+
+import (
+	"github.com/prometheus/client_golang/prometheus"
+)
+
+const (
+    SERVICE_NAME = "@service_name@"
+    DATABASE = "database"
+)
+
+var Metrics MetricWrapper
+
+@declare_metrics@
+
+func init() {
+	Metrics = &Helper{
+    	SERVICE_NAME: SERVICE_NAME,
+    	DATABASE: DATABASE,
+    }
+	@init_metrics@
+}

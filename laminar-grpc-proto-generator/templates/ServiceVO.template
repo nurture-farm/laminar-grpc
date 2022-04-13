@@ -1,0 +1,27 @@
+package @java_package@.dao;
+
+import @java_package@.proto.*;
+import com.google.protobuf.ByteString;
+
+public class @service_response@VO {
+
+@voVariables@
+
+@voNullVariables@
+
+
+    public @service_response@VO(@voConstructorVariables@) {
+@voThisVarAssignment@
+
+    }
+
+@voDisableProtoS@
+    public @service_response@Record buildProto() {
+        @service_response@Record.Builder recordBuilder = @service_response@Record.newBuilder();
+        @builders@
+@voToProtoRecord@
+        return recordBuilder.build();
+    }
+@voDisableProtoE@
+
+}

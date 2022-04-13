@@ -1,0 +1,3 @@
+message @requestName@ {
+    RequestHeaders requestHeaders = 1;
+    bool isStaleAllowed = 2;

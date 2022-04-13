@@ -1,0 +1,14 @@
+package setup
+
+import (
+	fs @go_proto_path@
+	"code.nurture.farm@namespace@/@service_name@/zerotouch/golang/service"
+	"context"
+)
+
+type s@service_name@Activities struct {
+}
+
+var @service_name@Activities *s@service_name@Activities = &s@service_name@Activities{}
+
+@insert_activtiesp@

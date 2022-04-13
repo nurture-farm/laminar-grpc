@@ -1,0 +1,7 @@
+package @java_package@;
+
+public abstract class AbstractStartupHook {
+
+    public abstract void start();
+
+}

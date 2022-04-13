@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package @proto_package@;
+@import_proto_timestamp@
+
+@import_contract@
+
+option java_multiple_files = true;
+option java_package = "@java_package@.proto";
+option go_package = "@go_package@";
+
+@common_proto@
+
+@callable_methods@
+
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+				 Multi Queries 					
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */ 
+message MultiRequests {
+    bool onTxn = 1;
+    repeated Request request = 2;
+}
+
+message Request {
+    string index = 1;
+    oneof ARequest {
+        @oneof_requests@
+	}
+}
+
+message MultiResponses {
+    @proto_status@ status = 1;
+    repeated Response response = 2;
+}
+
+message Response {
+    string index = 1;
+    @proto_status@ status = 2;
+    oneof AResponse {
+        @oneof_responses@
+	}
+}
+service @microservice_name@ {
+    @callable_services@
+	rpc Execute (MultiRequests) returns (MultiResponses) {}
+}

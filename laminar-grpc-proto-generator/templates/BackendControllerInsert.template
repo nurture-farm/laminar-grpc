@@ -1,0 +1,6 @@
+
+
+    public void onError@service_name@ ( ReqRes<@service_request@,@service_response@> currentStep,
+         List<ReqRes<Request,Response>> previousSteps, ServiceContext context, Exception ex ) {
+
+    }

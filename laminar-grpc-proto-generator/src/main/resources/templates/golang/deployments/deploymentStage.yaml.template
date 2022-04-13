@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: @service_name_kebab@-deployment
+  namespace: @namespace@
+spec:
+  selector:
+    matchLabels:
+      app: @service_name_kebab@
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: @service_name_kebab@
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '@prometheus_port@'
+        prometheus.io/path: '/metrics'
+    spec:
+      containers:
+        - image: @ecr_link@@namespace@/@service_name_kebab@:stage-latest
+          imagePullPolicy: Always
+          name: @service_name_kebab@
+          ports:
+            - containerPort: @server_port@
+            - containerPort: @prometheus_port@
+          env:
+            - name: CONFIG_DIR
+              value: /@service_name_kebab@@namespace@/golang/config
+            - name: ENV
+              value: stage

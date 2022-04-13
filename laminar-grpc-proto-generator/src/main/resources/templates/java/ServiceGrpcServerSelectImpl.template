@@ -1,0 +1,44 @@
+
+    @Override
+        public void @service_name@(WriteBase writer, AbstractBackendController.ReqRes<@service_request@, @service_response@> reqres,
+        List<AbstractBackendController.ReqRes<Request,Response>> prevSteps, ServiceContext context) {
+
+        @service_request@ request = reqres.request;
+        try {
+
+            List<@service_response@VO> recordList = null;
+            @service_response@.Builder responseBuilder = null;
+
+            Object[] paramValues = null;
+            @paramValues@
+
+            String sqlStmt = SqlStmts.@service_name@;
+            @sqlreplace@
+            recordList = new @service_response@Dao().execute( sqlStmt, paramValues );
+            responseBuilder = @service_response@.newBuilder().setStatus(OK).setCount(recordList.size());
+
+            if (BackendControllerFactory.getInstance().pipelines != null) {
+                for (AbstractBackendController pipeline : BackendControllerFactory.getInstance().pipelines)
+                    pipeline.onData@service_name@(writer, recordList, responseBuilder, reqres, prevSteps,  context);
+                if ( null != reqres.response) return;
+            }
+
+            if ( ! context.manualOverride) {
+                @add_records@
+                reqres.response = responseBuilder.build();
+            }
+
+
+        } catch (Exception ex) {
+            LOG.info("ERROR while processing ListFarmers", ex);
+            ex.printStackTrace();
+
+            if (BackendControllerFactory.getInstance().pipelines != null) {
+                for (AbstractBackendController pipeline : BackendControllerFactory.getInstance().pipelines)
+                    pipeline.onError@service_name@(reqres, prevSteps, context, ex);
+            }
+
+        }
+
+    }
+

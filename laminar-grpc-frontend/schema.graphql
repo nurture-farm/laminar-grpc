@@ -1,0 +1,1183 @@
+schema {
+  query: QueryType
+  mutation: MutationType
+}
+
+"""Exposes a URL that specifies the behaviour of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behaviour of this scalar."""
+  url: String!
+) on SCALAR
+
+input Input_laminar_LaminarAddAlldatatypeRequest {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarAddAlldatatypeResponse {
+  status: Boolean
+  count: Int
+}
+
+input Input_laminar_LaminarAddFarmerRequest {
+  farmerId: Int
+  farmerName: String
+  email: String
+  epochs: String
+}
+
+input Input_laminar_LaminarAddFarmerResponse {
+  status: Boolean
+  count: Int
+}
+
+input Input_laminar_LaminarJoinTableRecord {
+  farmName: String
+  farmerName: String
+}
+
+input Input_laminar_LaminarJoinTableRequest {
+  isStaleAllowed: Boolean
+}
+
+input Input_laminar_LaminarJoinTableResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarJoinTableRecord]
+}
+
+input Input_laminar_LaminarListAllFarmersRecord {
+  id: Long
+  farmerId: String
+  farmerName: String
+  epochs: String
+  email: String
+}
+
+input Input_laminar_LaminarListAllFarmersRequest {
+  isStaleAllowed: Boolean
+}
+
+input Input_laminar_LaminarListAllFarmersResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListAllFarmersRecord]
+}
+
+input Input_laminar_LaminarListDatatypesBigIntRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesBigIntRequest {
+  isStaleAllowed: Boolean
+  cblob: Long
+}
+
+input Input_laminar_LaminarListDatatypesBigIntResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesBigIntRecord]
+}
+
+input Input_laminar_LaminarListDatatypesBlobRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesBlobRequest {
+  isStaleAllowed: Boolean
+  cblob: String
+}
+
+input Input_laminar_LaminarListDatatypesBlobResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesBlobRecord]
+}
+
+input Input_laminar_LaminarListDatatypesBoolRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesBoolRequest {
+  isStaleAllowed: Boolean
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesBoolResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesBoolRecord]
+}
+
+input Input_laminar_LaminarListDatatypesCharRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesCharRequest {
+  isStaleAllowed: Boolean
+  cchar: String
+}
+
+input Input_laminar_LaminarListDatatypesCharResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesCharRecord]
+}
+
+input Input_laminar_LaminarListDatatypesDateRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesDateRequest {
+  isStaleAllowed: Boolean
+  cdate: Long
+}
+
+input Input_laminar_LaminarListDatatypesDateResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesDateRecord]
+}
+
+input Input_laminar_LaminarListDatatypesDecimalRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesDecimalRequest {
+  isStaleAllowed: Boolean
+  cdecimal: Float
+}
+
+input Input_laminar_LaminarListDatatypesDecimalResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesDecimalRecord]
+}
+
+input Input_laminar_LaminarListDatatypesDoubleRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesDoubleRequest {
+  isStaleAllowed: Boolean
+  cdouble: Float
+}
+
+input Input_laminar_LaminarListDatatypesDoubleResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesDoubleRecord]
+}
+
+input Input_laminar_LaminarListDatatypesFloatRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesFloatRequest {
+  isStaleAllowed: Boolean
+  cfloat: Float
+}
+
+input Input_laminar_LaminarListDatatypesFloatResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesFloatRecord]
+}
+
+input Input_laminar_LaminarListDatatypesIntAndBoolRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesIntAndBoolRequest {
+  isStaleAllowed: Boolean
+  cbool: Boolean
+  cinteger: Int
+}
+
+input Input_laminar_LaminarListDatatypesIntAndBoolResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesIntAndBoolRecord]
+}
+
+input Input_laminar_LaminarListDatatypesIntegerRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesIntegerRequest {
+  isStaleAllowed: Boolean
+  cinteger: Int
+}
+
+input Input_laminar_LaminarListDatatypesIntegerResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesIntegerRecord]
+}
+
+input Input_laminar_LaminarListDatatypesNumericRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesNumericRequest {
+  isStaleAllowed: Boolean
+  cnumeric: Float
+}
+
+input Input_laminar_LaminarListDatatypesNumericResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesNumericRecord]
+}
+
+input Input_laminar_LaminarListDatatypesRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesRequest {
+  isStaleAllowed: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesRecord]
+}
+
+input Input_laminar_LaminarListDatatypesTimeRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesTimeRequest {
+  isStaleAllowed: Boolean
+  ctime: String
+}
+
+input Input_laminar_LaminarListDatatypesTimeResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesTimeRecord]
+}
+
+input Input_laminar_LaminarListDatatypesTimeStampRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesTimeStampRequest {
+  isStaleAllowed: Boolean
+  ctimestamp: Long
+}
+
+input Input_laminar_LaminarListDatatypesTimeStampResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesTimeStampRecord]
+}
+
+input Input_laminar_LaminarListDatatypesVarcharRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+input Input_laminar_LaminarListDatatypesVarcharRequest {
+  isStaleAllowed: Boolean
+  cvarchar: String
+}
+
+input Input_laminar_LaminarListDatatypesVarcharResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListDatatypesVarcharRecord]
+}
+
+input Input_laminar_LaminarListFarmersRecord {
+  id: Long
+  farmerId: String
+  farmerName: String
+  epochs: String
+  email: String
+}
+
+input Input_laminar_LaminarListFarmersRequest {
+  isStaleAllowed: Boolean
+  id: Long
+}
+
+input Input_laminar_LaminarListFarmersResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarListFarmersRecord]
+}
+
+input Input_laminar_LaminarNoTableRecord {
+  a: String
+}
+
+input Input_laminar_LaminarNoTableRequest {
+  isStaleAllowed: Boolean
+}
+
+input Input_laminar_LaminarNoTableResponse {
+  status: Boolean
+  count: Int
+  records: [Input_laminar_LaminarNoTableRecord]
+}
+
+input Input_laminar_LaminarRequest {
+  index: String
+  reqAddFarmer: Input_laminar_LaminarAddFarmerRequest
+  reqListFarmers: Input_laminar_LaminarListFarmersRequest
+  reqListDatatypes: Input_laminar_LaminarListDatatypesRequest
+  reqListDatatypesDate: Input_laminar_LaminarListDatatypesDateRequest
+  reqListDatatypesTime: Input_laminar_LaminarListDatatypesTimeRequest
+  reqListDatatypesVarchar: Input_laminar_LaminarListDatatypesVarcharRequest
+  reqListDatatypesChar: Input_laminar_LaminarListDatatypesCharRequest
+  reqListDatatypesInteger: Input_laminar_LaminarListDatatypesIntegerRequest
+  reqListDatatypesDecimal: Input_laminar_LaminarListDatatypesDecimalRequest
+  reqListDatatypesDouble: Input_laminar_LaminarListDatatypesDoubleRequest
+  reqListDatatypesFloat: Input_laminar_LaminarListDatatypesFloatRequest
+  reqListDatatypesNumeric: Input_laminar_LaminarListDatatypesNumericRequest
+  reqListDatatypesBool: Input_laminar_LaminarListDatatypesBoolRequest
+  reqListDatatypesBlob: Input_laminar_LaminarListDatatypesBlobRequest
+  reqListDatatypesBigInt: Input_laminar_LaminarListDatatypesBigIntRequest
+  reqListDatatypesTimeStamp: Input_laminar_LaminarListDatatypesTimeStampRequest
+  reqListDatatypesIntAndBool: Input_laminar_LaminarListDatatypesIntAndBoolRequest
+  reqAddAlldatatype: Input_laminar_LaminarAddAlldatatypeRequest
+  reqNoTable: Input_laminar_LaminarNoTableRequest
+  reqJoinTable: Input_laminar_LaminarJoinTableRequest
+  reqListAllFarmers: Input_laminar_LaminarListAllFarmersRequest
+}
+
+input Input_laminar_LaminarRequests {
+  request: [Input_laminar_LaminarRequest]
+}
+
+input Input_laminar_LaminarResponse {
+  index: String
+  status: Boolean
+  resAddFarmer: Input_laminar_LaminarAddFarmerResponse
+  resListFarmers: Input_laminar_LaminarListFarmersResponse
+  resListDatatypes: Input_laminar_LaminarListDatatypesResponse
+  resListDatatypesDate: Input_laminar_LaminarListDatatypesDateResponse
+  resListDatatypesTime: Input_laminar_LaminarListDatatypesTimeResponse
+  resListDatatypesVarchar: Input_laminar_LaminarListDatatypesVarcharResponse
+  resListDatatypesChar: Input_laminar_LaminarListDatatypesCharResponse
+  resListDatatypesInteger: Input_laminar_LaminarListDatatypesIntegerResponse
+  resListDatatypesDecimal: Input_laminar_LaminarListDatatypesDecimalResponse
+  resListDatatypesDouble: Input_laminar_LaminarListDatatypesDoubleResponse
+  resListDatatypesFloat: Input_laminar_LaminarListDatatypesFloatResponse
+  resListDatatypesNumeric: Input_laminar_LaminarListDatatypesNumericResponse
+  resListDatatypesBool: Input_laminar_LaminarListDatatypesBoolResponse
+  resListDatatypesBlob: Input_laminar_LaminarListDatatypesBlobResponse
+  resListDatatypesBigInt: Input_laminar_LaminarListDatatypesBigIntResponse
+  resListDatatypesTimeStamp: Input_laminar_LaminarListDatatypesTimeStampResponse
+  resListDatatypesIntAndBool: Input_laminar_LaminarListDatatypesIntAndBoolResponse
+  resAddAlldatatype: Input_laminar_LaminarAddAlldatatypeResponse
+  resNoTable: Input_laminar_LaminarNoTableResponse
+  resJoinTable: Input_laminar_LaminarJoinTableResponse
+  resListAllFarmers: Input_laminar_LaminarListAllFarmersResponse
+}
+
+input Input_laminar_LaminarResponses {
+  status: Boolean
+  response: [Input_laminar_LaminarResponse]
+}
+
+type laminar_LaminarAddAlldatatypeRequest {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarAddAlldatatypeResponse {
+  status: Boolean
+  count: Int
+}
+
+type laminar_LaminarAddFarmerRequest {
+  farmerId: Int
+  farmerName: String
+  email: String
+  epochs: String
+}
+
+type laminar_LaminarAddFarmerResponse {
+  status: Boolean
+  count: Int
+}
+
+type laminar_LaminarJoinTableRecord {
+  farmName: String
+  farmerName: String
+}
+
+type laminar_LaminarJoinTableRequest {
+  isStaleAllowed: Boolean
+}
+
+type laminar_LaminarJoinTableResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarJoinTableRecord]
+}
+
+type laminar_LaminarListAllFarmersRecord {
+  id: Long
+  farmerId: String
+  farmerName: String
+  epochs: String
+  email: String
+}
+
+type laminar_LaminarListAllFarmersRequest {
+  isStaleAllowed: Boolean
+}
+
+type laminar_LaminarListAllFarmersResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListAllFarmersRecord]
+}
+
+type laminar_LaminarListDatatypesBigIntRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesBigIntRequest {
+  isStaleAllowed: Boolean
+  cblob: Long
+}
+
+type laminar_LaminarListDatatypesBigIntResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesBigIntRecord]
+}
+
+type laminar_LaminarListDatatypesBlobRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesBlobRequest {
+  isStaleAllowed: Boolean
+  cblob: String
+}
+
+type laminar_LaminarListDatatypesBlobResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesBlobRecord]
+}
+
+type laminar_LaminarListDatatypesBoolRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesBoolRequest {
+  isStaleAllowed: Boolean
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesBoolResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesBoolRecord]
+}
+
+type laminar_LaminarListDatatypesCharRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesCharRequest {
+  isStaleAllowed: Boolean
+  cchar: String
+}
+
+type laminar_LaminarListDatatypesCharResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesCharRecord]
+}
+
+type laminar_LaminarListDatatypesDateRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesDateRequest {
+  isStaleAllowed: Boolean
+  cdate: Long
+}
+
+type laminar_LaminarListDatatypesDateResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesDateRecord]
+}
+
+type laminar_LaminarListDatatypesDecimalRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesDecimalRequest {
+  isStaleAllowed: Boolean
+  cdecimal: Float
+}
+
+type laminar_LaminarListDatatypesDecimalResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesDecimalRecord]
+}
+
+type laminar_LaminarListDatatypesDoubleRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesDoubleRequest {
+  isStaleAllowed: Boolean
+  cdouble: Float
+}
+
+type laminar_LaminarListDatatypesDoubleResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesDoubleRecord]
+}
+
+type laminar_LaminarListDatatypesFloatRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesFloatRequest {
+  isStaleAllowed: Boolean
+  cfloat: Float
+}
+
+type laminar_LaminarListDatatypesFloatResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesFloatRecord]
+}
+
+type laminar_LaminarListDatatypesIntAndBoolRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesIntAndBoolRequest {
+  isStaleAllowed: Boolean
+  cbool: Boolean
+  cinteger: Int
+}
+
+type laminar_LaminarListDatatypesIntAndBoolResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesIntAndBoolRecord]
+}
+
+type laminar_LaminarListDatatypesIntegerRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesIntegerRequest {
+  isStaleAllowed: Boolean
+  cinteger: Int
+}
+
+type laminar_LaminarListDatatypesIntegerResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesIntegerRecord]
+}
+
+type laminar_LaminarListDatatypesNumericRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesNumericRequest {
+  isStaleAllowed: Boolean
+  cnumeric: Float
+}
+
+type laminar_LaminarListDatatypesNumericResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesNumericRecord]
+}
+
+type laminar_LaminarListDatatypesRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesRequest {
+  isStaleAllowed: Boolean
+}
+
+type laminar_LaminarListDatatypesResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesRecord]
+}
+
+type laminar_LaminarListDatatypesTimeRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesTimeRequest {
+  isStaleAllowed: Boolean
+  ctime: String
+}
+
+type laminar_LaminarListDatatypesTimeResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesTimeRecord]
+}
+
+type laminar_LaminarListDatatypesTimeStampRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesTimeStampRequest {
+  isStaleAllowed: Boolean
+  ctimestamp: Long
+}
+
+type laminar_LaminarListDatatypesTimeStampResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesTimeStampRecord]
+}
+
+type laminar_LaminarListDatatypesVarcharRecord {
+  cvarchar: String
+  cchar: String
+  cinteger: Int
+  cdate: Long
+  ctime: String
+  cdecimal: Float
+  cdouble: Float
+  cfloat: Float
+  cnumeric: Float
+  csmallint: Int
+  cbigint: Long
+  ctimestamp: Long
+  cblob: String
+  cbool: Boolean
+}
+
+type laminar_LaminarListDatatypesVarcharRequest {
+  isStaleAllowed: Boolean
+  cvarchar: String
+}
+
+type laminar_LaminarListDatatypesVarcharResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListDatatypesVarcharRecord]
+}
+
+type laminar_LaminarListFarmersRecord {
+  id: Long
+  farmerId: String
+  farmerName: String
+  epochs: String
+  email: String
+}
+
+type laminar_LaminarListFarmersRequest {
+  isStaleAllowed: Boolean
+  id: Long
+}
+
+type laminar_LaminarListFarmersResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarListFarmersRecord]
+}
+
+type laminar_LaminarNoTableRecord {
+  a: String
+}
+
+type laminar_LaminarNoTableRequest {
+  isStaleAllowed: Boolean
+}
+
+type laminar_LaminarNoTableResponse {
+  status: Boolean
+  count: Int
+  records: [laminar_LaminarNoTableRecord]
+}
+
+type laminar_LaminarRequest {
+  index: String
+  reqAddFarmer: laminar_LaminarAddFarmerRequest
+  reqListFarmers: laminar_LaminarListFarmersRequest
+  reqListDatatypes: laminar_LaminarListDatatypesRequest
+  reqListDatatypesDate: laminar_LaminarListDatatypesDateRequest
+  reqListDatatypesTime: laminar_LaminarListDatatypesTimeRequest
+  reqListDatatypesVarchar: laminar_LaminarListDatatypesVarcharRequest
+  reqListDatatypesChar: laminar_LaminarListDatatypesCharRequest
+  reqListDatatypesInteger: laminar_LaminarListDatatypesIntegerRequest
+  reqListDatatypesDecimal: laminar_LaminarListDatatypesDecimalRequest
+  reqListDatatypesDouble: laminar_LaminarListDatatypesDoubleRequest
+  reqListDatatypesFloat: laminar_LaminarListDatatypesFloatRequest
+  reqListDatatypesNumeric: laminar_LaminarListDatatypesNumericRequest
+  reqListDatatypesBool: laminar_LaminarListDatatypesBoolRequest
+  reqListDatatypesBlob: laminar_LaminarListDatatypesBlobRequest
+  reqListDatatypesBigInt: laminar_LaminarListDatatypesBigIntRequest
+  reqListDatatypesTimeStamp: laminar_LaminarListDatatypesTimeStampRequest
+  reqListDatatypesIntAndBool: laminar_LaminarListDatatypesIntAndBoolRequest
+  reqAddAlldatatype: laminar_LaminarAddAlldatatypeRequest
+  reqNoTable: laminar_LaminarNoTableRequest
+  reqJoinTable: laminar_LaminarJoinTableRequest
+  reqListAllFarmers: laminar_LaminarListAllFarmersRequest
+}
+
+type laminar_LaminarRequests {
+  request: [laminar_LaminarRequest]
+}
+
+type laminar_LaminarResponse {
+  index: String
+  status: Boolean
+  resAddFarmer: laminar_LaminarAddFarmerResponse
+  resListFarmers: laminar_LaminarListFarmersResponse
+  resListDatatypes: laminar_LaminarListDatatypesResponse
+  resListDatatypesDate: laminar_LaminarListDatatypesDateResponse
+  resListDatatypesTime: laminar_LaminarListDatatypesTimeResponse
+  resListDatatypesVarchar: laminar_LaminarListDatatypesVarcharResponse
+  resListDatatypesChar: laminar_LaminarListDatatypesCharResponse
+  resListDatatypesInteger: laminar_LaminarListDatatypesIntegerResponse
+  resListDatatypesDecimal: laminar_LaminarListDatatypesDecimalResponse
+  resListDatatypesDouble: laminar_LaminarListDatatypesDoubleResponse
+  resListDatatypesFloat: laminar_LaminarListDatatypesFloatResponse
+  resListDatatypesNumeric: laminar_LaminarListDatatypesNumericResponse
+  resListDatatypesBool: laminar_LaminarListDatatypesBoolResponse
+  resListDatatypesBlob: laminar_LaminarListDatatypesBlobResponse
+  resListDatatypesBigInt: laminar_LaminarListDatatypesBigIntResponse
+  resListDatatypesTimeStamp: laminar_LaminarListDatatypesTimeStampResponse
+  resListDatatypesIntAndBool: laminar_LaminarListDatatypesIntAndBoolResponse
+  resAddAlldatatype: laminar_LaminarAddAlldatatypeResponse
+  resNoTable: laminar_LaminarNoTableResponse
+  resJoinTable: laminar_LaminarJoinTableResponse
+  resListAllFarmers: laminar_LaminarListAllFarmersResponse
+}
+
+type laminar_LaminarResponses {
+  status: Boolean
+  response: [laminar_LaminarResponse]
+}
+
+"""Long type"""
+scalar Long
+
+type MutationType {
+  executeAddFarmer(input: Input_laminar_LaminarAddFarmerRequest): laminar_LaminarAddFarmerResponse
+}
+
+type QueryType {
+  executeListFarmers(input: Input_laminar_LaminarListFarmersRequest): laminar_LaminarListFarmersResponse
+  executeListAllFarmers(input: Input_laminar_LaminarListAllFarmersRequest): laminar_LaminarListAllFarmersResponse
+}
+

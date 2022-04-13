@@ -1,0 +1,12 @@
+func registerAsWorker() client.Client {
+
+	w := worker.New(setup.WorkflowClient, "@service_workername@", worker.Options{})
+	w.RegisterActivity(setup.@service_name@Activities)
+
+	logger.Info("Starting @service_workername@", zap.Any("worker", w))
+	workerErr := w.Run(worker.InterruptCh())
+	if workerErr != nil {
+		logger.Panic("Unable to start activity worker", zap.Error(workerErr))
+	}
+	return setup.WorkflowClient
+}

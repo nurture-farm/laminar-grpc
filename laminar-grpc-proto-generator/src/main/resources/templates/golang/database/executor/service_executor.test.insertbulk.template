@@ -1,0 +1,24 @@
+func TestExecute@title@BulkServiceExecutor(t *testing.T) {
+    request := &fs.Bulk@service_request@{}
+
+    req := &fs.@service_request@{}
+	request.Requests = append(request.Requests, req)
+	request.Requests = append(request.Requests, req)
+	var args []interface{}
+	for _, r := range request.Requests {
+		model := mappers.Make@service_request@VO(r)
+		args = append(args, executor.@title@Args(model)...)
+	}
+
+    ctx := context.Background()
+
+    Mock.ExpectExec("INSERT INTO").WithArgs(@args@).WillReturnResult(sqlmock.NewResult(1, 1))
+    resp, err := executor.RequestExecutor.Execute@title@Bulk(ctx, request)
+	assert := assert.New(t)
+	assert.Equal(fs.StatusCode_SUCCESS, resp.Status.Status)
+
+    er := errors.New("Some Error")
+    Mock.ExpectExec("INSERT INTO").WithArgs(@args@).WillReturnError(er)
+    resp, err = executor.RequestExecutor.Execute@title@Bulk(ctx, request)
+    assert.Equal(er, err)
+}

@@ -1,0 +1,40 @@
+{
+  "server": {
+    "port": 6400,
+    "api_hook": "farm.nurture.farm.service.BackendControllerImpl",
+    "startup_hook": "farm.nurture.farm.service.StartupHookImpl"
+  },
+
+  "prometheus" : {
+    "enabled": false,
+    "port": 6405
+  },
+
+  "temporal_worker": {
+    "enabled": true,
+    "namespace": "default",
+    "address": "localhost:7233",
+    "task_queue": "SSWorker"
+  },
+
+  "proto": {
+    "proto_generate_path": "proto",
+    "java_generate_path": "zerotouch/java/src/main",
+    "java_override_path": "core/java/src/main",
+    "graphql_generate_path": "graphql/src/main",
+    "go_generate_path": "zerotouch/golang",
+    "go_override_path": "core/golang",
+    "service_name": "SampleService",
+    "namespace": "core",
+    "proto_package": "farm.nurture.core.contracts.SampleService",
+    "java_package": "farm.nurture.farm.service",
+    "go_package": "SampleService",
+    "code_url": "code.nurture.farm",
+    "graphql_uri": "/core/sample_service"
+  },
+
+  "contract": {
+    "contract_path": "/Users/kishannigam/go/src/code.nurture.farm/Core/Contracts",
+    "contract_tag": "v1.2.5"
+  }
+}

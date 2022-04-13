@@ -1,0 +1,54 @@
+package hook
+
+import (
+    "context"
+    fs @go_proto_path@
+)
+type @service_request@Interface interface {
+	OnRequest(ctx context.Context, request *fs.@request_name@) *fs.@service_response@
+	OnData(ctx context.Context, request *fs.@request_name@, response *fs.@service_response@) *fs.@service_response@
+	OnError(ctx context.Context, request *fs.@request_name@, response *fs.@service_response@, err error) *fs.@service_response@
+	OnResponse(ctx context.Context, request *fs.@request_name@, response *fs.@service_response@) *fs.@service_response@
+}
+
+type Generic@service_request@Executor struct {
+	@service_request@Interface @service_request@Interface
+}
+
+type @service_request@Controller struct{
+}
+
+var @service_request@Executor *Generic@service_request@Executor
+
+func (ge *Generic@service_request@Executor) OnRequest(ctx context.Context, request *fs.@request_name@) *fs.@service_response@ {
+	return ge.@service_request@Interface.OnRequest(ctx,request)
+}
+
+func (ge *Generic@service_request@Executor) OnResponse(ctx context.Context, request *fs.@request_name@, response *fs.@service_response@) *fs.@service_response@ {
+	return ge.@service_request@Interface.OnResponse(ctx,request, response)
+}
+
+func (ge *Generic@service_request@Executor) OnData(ctx context.Context, request *fs.@request_name@, response *fs.@service_response@) *fs.@service_response@ {
+	return ge.@service_request@Interface.OnData(ctx,request, response)
+}
+
+func (ge *Generic@service_request@Executor) OnError(ctx context.Context, request *fs.@request_name@, response *fs.@service_response@, err error) *fs.@service_response@ {
+	return ge.@service_request@Interface.OnError(ctx,request, response, err)
+}
+
+func (rc *@service_request@Controller) OnRequest(ctx context.Context, request *fs.@request_name@) *fs.@service_response@ {
+	return nil
+}
+
+func (rc *@service_request@Controller) OnResponse(ctx context.Context, request *fs.@request_name@, response *fs.@service_response@) *fs.@service_response@ {
+	return nil
+}
+
+func (rc *@service_request@Controller) OnData(ctx context.Context, request *fs.@request_name@, response *fs.@service_response@) *fs.@service_response@ {
+	return nil
+}
+
+func (rc *@service_request@Controller) OnError(ctx context.Context, request *fs.@request_name@, response *fs.@service_response@, err error) *fs.@service_response@ {
+	return nil
+}
+

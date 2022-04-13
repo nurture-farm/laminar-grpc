@@ -1,0 +1,35 @@
+
+    @mutation@("execute@grpc_rpcname@")
+    public ListenableFuture<@grpc_resname@> @grpc_rpcname@(
+            DataFetchingEnvironment environment,
+            @grpc_reqname@ req) {
+
+        boolean isVerified = @grpc_rpcname@OAuth(environment, req.getRequestHeaders());
+        if  ( isVerified ) return futureClient.execute@grpc_rpcname@(req);
+        else {
+            SettableFuture<@grpc_resname@> errFuture = SettableFuture.create();
+            errFuture.set(@grpc_resname@.newBuilder().setStatus(getErrorStatus(errMsg)).build());
+            return errFuture;
+        }
+    }
+
+    protected boolean @grpc_rpcname@OAuth(DataFetchingEnvironment environment, RequestHeaders reqHeaders) {
+
+
+        OAuthValidator.VerifyInput authAndAppToken = getVerifyInput(environment, reqHeaders);
+        boolean checkPrivate = @oauth_private@;
+        boolean isVerified = ! checkPrivate;
+        if ( checkPrivate ) {
+            OAuthValidator.Claim[] claims = new OAuthValidator.Claim[] {
+                @oauth_claims@
+            };
+            try {
+                String preferredUserName =  ( claims.length > 0  ) ?
+                    OAuthValidator.getInstance().verify(authAndAppToken, claims) :
+                    OAuthValidator.getInstance().verify(authAndAppToken);
+
+                isVerified = ( preferredUserName.equals(reqHeaders.getPrefferedUserName()));
+            } catch (Exception ex) { isVerified = false; errMsg = ex.getMessage();}
+        }
+        return isVerified;
+    }

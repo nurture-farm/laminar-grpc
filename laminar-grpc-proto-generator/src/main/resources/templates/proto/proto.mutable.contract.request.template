@@ -1,0 +1,2 @@
+message @requestName@ {
+    farm.nurture.core.contracts.common.RequestHeaders requestHeaders = 1;

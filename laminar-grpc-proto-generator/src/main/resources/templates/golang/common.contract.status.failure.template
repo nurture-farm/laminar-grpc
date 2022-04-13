@@ -1,0 +1,4 @@
+&common.RequestStatusResult{
+                Status: common.RequestStatus_INTERNAL_ERROR,
+                ErrorCode: common.ErrorCode_DATABASE_ERROR,
+            },

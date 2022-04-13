@@ -1,0 +1,15 @@
+package @java_package@;
+
+import @java_package@.proto.MultiResponses;
+import @java_package@.proto.MultiRequests;
+
+import @java_package@.proto.*;
+import farm.nurture.laminar.core.sql.dao.WriteBase;
+
+import java.util.List;
+
+
+public interface ServiceMethods {
+    MultiResponses.Builder executeInternal(MultiRequests request);
+    @grpc_methods@
+}

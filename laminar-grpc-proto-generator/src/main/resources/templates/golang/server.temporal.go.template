@@ -1,0 +1,32 @@
+var logger *zap.Logger = getLogger()
+
+func getLogger() *zap.Logger {
+	log, err := zap.NewProduction()
+	if err != nil {
+		panic(err)
+	}
+	return log
+}
+
+var WorkflowClient, WorkerConfig = getWorkflowClient()
+
+func getWorkflowClient() (client.Client, map[string]string) {
+	workerConfig := viper.GetStringMapString("worker_config")
+
+	logger.Info("Worker config",
+    		zap.String("TemporalHostPort", database.TemporalHostPort),
+    		zap.String("TemporalNamespace", database.TemporalNamespace),)
+	c, err := client.NewClient(client.Options{
+		Namespace: workerConfig["namespace"],
+		HostPort:  workerConfig["temporal_host_port"],
+	})
+	if err != nil {
+		logger.Fatal("Unable to create client", zap.Error(err))
+	}
+	return c, workerConfig
+}
+
+func (fs *s@service_name@) Close() {
+	fs.wfClient.Close()
+}
+

@@ -1,0 +1,64 @@
+{
+  "server": {
+
+      "port": 6000,
+
+      "api_hook": "farm.nurture.example.service.BackendControllerImpl",
+
+      "startup_hook": "farm.nurture.example.service.StartupHookImpl"
+
+  },
+
+  "prometheus" : {
+
+      "enabled": false,
+
+      "port": 6005
+
+  },
+
+  "temporal_worker": {
+
+      "enabled": false,
+
+      "namespace": "default",
+
+      "address": "localhost:7233",
+
+      "task_queue": "MicroServiceWorker"
+
+  },
+
+  "proto": {
+
+      "service_name": "TestService",
+
+      "proto_generate_path": "proto",
+
+      "java_generate_path": "/zerotouch/java/src/main",
+
+      "java_override_path": "/core/java/src/main",
+
+      "graphql_generate_path": "/graphql/src/main",
+
+      "go_generate_path": "/zerotouch/golang",
+
+      "go_override_path": "/core/golang",
+
+      "namespace": "platform",
+
+      "proto_package": "farm.nurture.core.contracts.TestService",
+
+      "java_package": "farm.nurture.farm.service",
+
+      "go_package": "TestService",
+
+      "code_url": "code.nurture.farm",
+
+      "graphql_uri": "/core/TestService",
+
+      "code_generation_input_config_source": "LAM"
+
+  }
+
+}

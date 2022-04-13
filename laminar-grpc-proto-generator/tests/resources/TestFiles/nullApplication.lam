@@ -1,0 +1,30 @@
+[
+    {
+
+    "title" : "FindAge",
+    "req_name" : null,
+    "res_name" : null,
+    "decl_req" : 1,
+    "decl_res" : 1,
+    "decl_grpc" : 1,
+    "decl_grapql" : 0,
+    "sql_stmt" : "SELECT age FROM User WHERE id = ?;",
+    "sql_params" : "id:User.id",
+    "sql_uniquekey" : 0,
+    "impl_dao" : 1,
+    "impl_grpc" : 1,
+    "null_sql_replace" : 1,
+    "sql_replace" : null,
+    "impl_reacrjs" : 0,
+    "req_override" : null,
+    "res_override" : null,
+    "mutation" : "S",
+    "oauth_public" : 0,
+    "oauth_claims" : null,
+    "status" : 1
+
+    }
+]
+
+
+

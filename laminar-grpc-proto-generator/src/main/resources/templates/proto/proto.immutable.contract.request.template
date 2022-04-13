@@ -1,0 +1,3 @@
+message @requestName@ {
+    farm.nurture.core.contracts.common.RequestHeaders requestHeaders = 1;
+    bool isStaleAllowed = 2;

@@ -1,0 +1,1 @@
+replace code.nurture.farm/Core/Contracts => @contract_path@

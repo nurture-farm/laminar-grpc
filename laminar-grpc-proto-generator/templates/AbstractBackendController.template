@@ -1,0 +1,60 @@
+package @java_package@;
+
+import java.util.List;
+
+import farm.nurture.laminar.core.sql.dao.WriteBase;
+import farm.nurture.laminar.core.sql.InvalidRequestException;
+import @java_package@.proto.*;
+import @java_package@.dao.*;
+
+
+/**
+     * ------------------
+     *
+     * ------------------
+     * change the request before adding to the database, like __uuid conversion or state change validation.
+     * If there is an issue, raise invalidrequest exception, it will stop further processing.
+     * Before processing, another microservice may be invoked, mark it a failure if that fails.
+     * ------------------
+     * onError
+     * ------------------
+     * change the request before adding to the database, like __uuid conversion or state change validation.
+     * If there is an issue, raise invalidrequest exception, it will stop further processing.
+     * Before processing, another microservice may be invoked, mark it a failure if that fails.
+     * ------------------
+     * onData
+     * ------------------
+     *  May need to process on the output data.
+     * ------------------
+     * onOutput
+     * ------------------
+     * Optimistic locking may not allow a state change with 0 records, then mark it a failure
+     * Make other micro service invocation from here.  on failure, mark it a failure.
+     * Start a workflow from here. Change the response accordingly.
+     */
+
+
+public abstract class AbstractBackendController  {
+
+    public static class ReqRes<I,O> {
+        public I request;
+        public O response;
+
+        public ReqRes(I request, O response) {
+            this.request = request;
+            this.response = response;
+        }
+
+        public ReqRes(I request) {
+            this.request = request;
+        }
+
+    }
+
+    public ServiceMethods services;
+
+    public abstract String getName();
+
+    @hooks@
+
+}

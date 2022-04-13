@@ -1,0 +1,39 @@
+func (rc *Hook@title@Mock) OnRequest(ctx context.Context, request *fs.@service_request@) *fs.@service_response@ {
+	var @title@Response *fs.@service_response@
+	args := rc.Called(ctx, request)
+	mocked@title@Response := args.Get(0)
+	if mocked@title@Response != nil {
+		@title@Response = mocked@title@Response.(*fs.@service_response@)
+	}
+	return @title@Response
+}
+
+func (rc *Hook@title@Mock) OnResponse(ctx context.Context, request *fs.@service_request@, response *fs.@service_response@) *fs.@service_response@ {
+	var @title@Response *fs.@service_response@
+	args := rc.Called(ctx, request, response)
+	mocked@title@Response := args.Get(0)
+	if mocked@title@Response != nil {
+		@title@Response = mocked@title@Response.(*fs.@service_response@)
+	}
+	return @title@Response
+}
+
+func (rc *Hook@title@Mock) OnError(ctx context.Context, request *fs.@service_request@, response *fs.@service_response@, err error) *fs.@service_response@ {
+	var @title@Response *fs.@service_response@
+	args := rc.Called(ctx, request, response, err)
+	mocked@title@Response := args.Get(0)
+	if mocked@title@Response != nil {
+		@title@Response = mocked@title@Response.(*fs.@service_response@)
+	}
+	return @title@Response
+}
+
+func (rc *Hook@title@Mock) OnData(ctx context.Context, request *fs.@service_request@, response *fs.@service_response@) *fs.@service_response@ {
+	var @title@Response *fs.@service_response@
+	args := rc.Called(ctx, request, response)
+	mocked@title@Response := args.Get(0)
+	if mocked@title@Response != nil {
+		@title@Response = mocked@title@Response.(*fs.@service_response@)
+	}
+	return @title@Response
+}

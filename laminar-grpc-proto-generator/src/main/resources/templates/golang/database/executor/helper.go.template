@@ -1,0 +1,19 @@
+package executor
+
+import (
+    @import_proto@
+	"@code_url@@namespace@/@service_name@/zerotouch/golang/database/models"
+	"go.uber.org/zap"
+)
+
+var logger = getLogger()
+
+func getLogger() *zap.Logger {
+	logger, err := zap.NewProduction()
+	if err != nil {
+		panic("Unable to initialize log at init()")
+	}
+	return logger
+}
+
+@inserthelper@

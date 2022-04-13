@@ -1,0 +1,48 @@
+func (se *Executor) Execute@title@Bulk(ctx context.Context, bulkRequest *fs.Bulk@service_request@) (*fs.Bulk@service_response@, error) {
+
+	var args []interface{}
+	currQuery := database.QUERY_@title_query@
+    if idx := strings.Index(currQuery, "(?"); idx != -1 {
+        currQuery = currQuery[:idx]
+    }
+
+	for index, request := range bulkRequest.Requests {
+		if index == len(bulkRequest.Requests)-1 {
+			currQuery += "@place_holders@"
+		} else {
+			currQuery += "@place_holders@,"
+		}
+		model := mappers.Make@service_request@VO(request)
+		args = append(args, @title@Args(model)...)
+	}
+
+	var rows sql.Result
+	err := Driver.GetDriver().Exec(ctx, currQuery, args, &rows)
+	if err != nil {
+		logger.Error("Error could not Bulk@service_request@", zap.Error(err))
+		return nil, err
+	}
+
+	insertedId, err := rows.LastInsertId()
+    if err != nil {
+        logger.Error("Error could not get lastInsertedId for Bulk@service_request@", zap.Error(err))
+        return nil, err
+    }
+
+	var responses []*fs.@service_response@
+	for index := range bulkRequest.Requests {
+        responses = append(responses, &fs.@service_response@{
+            Status: @response_status_success@
+            Count: 1,
+            RecordId: cast.ToString(cast.ToInt(insertedId)+index),
+        })
+    }
+
+    response := &fs.Bulk@service_response@{
+        Status: @response_status_success@
+        Count: cast.ToInt32(len(bulkRequest.Requests)),
+        Responses: responses,
+    }
+
+	return response, nil
+}

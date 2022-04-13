@@ -1,0 +1,7 @@
+var (
+	@title@_Metrics = prometheus.NewSummaryVec(prometheus.SummaryOpts{
+		Name: "NF_@service_acronym@_@metric_name@",
+		Help: "Sumary metrics for @title@",
+		Objectives: map[float64]float64{0.5: 0.05, 0.9: 0.01, 0.99: 0.001},
+	},[]string{"nservice","nmethod","ncode"})
+)

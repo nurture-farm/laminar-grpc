@@ -1,0 +1,13 @@
+func @title@Args(request *fs.@service_request@) []interface{} {
+
+	var args []interface{}
+	@requestVariablesAppend@
+	return args
+}
+
+func @title@ArgsReq(model *models.@service_request@VO) ([]interface{}){
+
+	var args []interface{}
+	@voVariablesAppend@
+	return args
+}

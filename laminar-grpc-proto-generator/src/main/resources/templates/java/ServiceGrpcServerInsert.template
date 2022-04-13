@@ -1,0 +1,94 @@
+
+    @Override
+    public void execute@service_name@(@service_request@ request, StreamObserver<@service_response@> responseObserver) {
+        IMetricSummary metric = Metrics.getInstance().mTraffic;
+        boolean isOK = false;
+        long s = System.currentTimeMillis();
+
+        AbstractBackendController.ReqRes<@service_request@, @service_response@> reqres =
+            new AbstractBackendController.ReqRes<>(request);
+
+        List<AbstractBackendController> pipelines = BackendControllerFactory.getInstance().pipelines;
+        ServiceContext context = new ServiceContext();
+        try {
+            if (pipelines != null) {
+                for (AbstractBackendController pipeline : pipelines)
+                    pipeline.onRequest@service_name@(reqres, null, context);
+            }
+            LOG.info("@service_name@ Manual mode: " + context.manualOverride );
+
+
+            if ( ! context.manualOverride && reqres.response == null) {
+               @grpc_impl@ @service_name@(null, reqres, null, context);
+            }
+
+            if (pipelines != null && reqres.response == null  ) {
+                for (AbstractBackendController pipeline : pipelines)
+                    pipeline.onResponse@service_name@(reqres, null, context);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            if (pipelines != null) {
+                for (AbstractBackendController pipeline : pipelines)
+                    pipeline.onError@service_name@(reqres, null, context, ex);
+            }
+        }
+
+        if ( null == reqres.response)  reqres.response = @service_response@.newBuilder().setStatus(
+            Status.newBuilder().setStatus(StatusCode.UNKNOWN_ERROR).addErrorMessages("Null response").build()).build();
+
+
+        responseObserver.onNext(reqres.response);
+        responseObserver.onCompleted();
+        isOK = reqres.response.getStatus().getStatus() == StatusCode.SUCCESS;
+        metric.observe( ( System.currentTimeMillis() - s), "@service_name@", (isOK) ? "OK" : "KO" );
+
+    }
+
+      @Override
+      public void execute@service_name@Bulk(Bulk@service_request@ requestA, StreamObserver<Bulk@service_response@> responseObserver) {
+
+          IMetricSummary metric = Metrics.getInstance().mTraffic;
+          boolean isOK = false;
+          long s = System.currentTimeMillis();
+
+          AbstractBackendController.ReqRes<Bulk@service_request@, Bulk@service_response@> reqres =
+              new AbstractBackendController.ReqRes<>(requestA);
+
+          List<AbstractBackendController> pipelines = BackendControllerFactory.getInstance().pipelines;
+          ServiceContext context = new ServiceContext();
+          try {
+              if (pipelines != null) {
+                  for (AbstractBackendController pipeline : pipelines)
+                      pipeline.onRequestBulk@service_name@(reqres, null, context);
+              }
+              LOG.info("@service_name@Bulk Manual mode: " + context.manualOverride );
+
+              if ( ! context.manualOverride && reqres.response == null) {
+                  @grpc_impl@@service_name@Bulk(null, reqres, null, context);
+              }
+
+              if (pipelines != null  ) {
+                  for (AbstractBackendController pipeline : pipelines)
+                      pipeline.onResponseBulk@service_name@(reqres, null, context);
+              }
+
+          } catch (Exception ex) {
+                ex.printStackTrace();
+                if (pipelines != null) {
+                    for (AbstractBackendController pipeline : pipelines)
+                        pipeline.onErrorBulk@service_name@(reqres, null, context, ex);
+                }
+          }
+
+          if ( null == reqres.response)  reqres.response = Bulk@service_response@.newBuilder().setStatus(
+                Status.newBuilder().setStatus(StatusCode.UNKNOWN_ERROR).addErrorMessages("Null response reveived").build()).build();
+
+
+          responseObserver.onNext(reqres.response);
+          responseObserver.onCompleted();
+          isOK = reqres.response.getStatus().getStatus() == StatusCode.SUCCESS;
+          metric.observe( ( System.currentTimeMillis() - s), "@service_name@Bulk" , (isOK) ? "OK" : "KO" );
+
+      }

@@ -1,0 +1,7 @@
+message @responseName@ {
+    farm.nurture.core.contracts.common.RequestStatusResult status = 1;
+    int32 count = 2;
+    string recordId = 3;
+    repeated farm.nurture.core.contracts.common.Attribs attribs = 4;
+    @res_body@
+}

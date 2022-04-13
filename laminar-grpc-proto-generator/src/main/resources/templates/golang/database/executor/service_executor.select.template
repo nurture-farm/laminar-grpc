@@ -1,0 +1,25 @@
+func (se *Executor) Execute@title@(ctx context.Context, request *fs.@service_request@) (*fs.@service_response@ , error) {
+
+	response := &fs.@service_response@{}
+	var rows = entsql.Rows{}
+	model := mappers.Make@service_request@VO(request)
+    args := @title@ArgsReq(model)
+	currQuery := database.QUERY_@title_query@
+	@sql_replace@
+	err := Driver.GetDriver().Query(ctx, currQuery, args, &rows)
+	if err != nil {
+		logger.Error("Error could not Execute@service_request@", zap.Error(err))
+        return nil, err
+	}
+	for rows.Next() {
+		model := models.@service_response@VO{}
+		err := rows.Scan(@response_fields@)
+		if err != nil {
+			logger.Error("Error while fetching rows for Execute@service_request@", zap.Error(err))
+			return nil, err
+		}
+		response.Records = @begin_appendrecord@mappers.Make@service_response@VO(&model)@end_appendrecord@
+	}
+	response.Status = @response_status_success@
+	return response, nil
+}

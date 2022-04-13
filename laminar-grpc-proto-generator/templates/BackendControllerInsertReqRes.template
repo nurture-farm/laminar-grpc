@@ -1,0 +1,11 @@
+
+    public void onRequest@service_name@ ( ReqRes<@service_request@,@service_response@> currentStep,
+        List<ReqRes<Request,Response>> previousSteps,
+        ServiceContext context ) {
+
+    }
+
+    public void onResponse@service_name@ ( ReqRes<@service_request@,@service_response@> currentStep,
+        List<ReqRes<Request,Response>> previousSteps, ServiceContext context ) {
+
+    }

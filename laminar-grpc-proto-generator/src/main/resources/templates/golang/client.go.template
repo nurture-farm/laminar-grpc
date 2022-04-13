@@ -1,0 +1,21 @@
+func Test@title@() {
+
+	var conn *grpc.ClientConn
+	conn, err := grpc.Dial(ENV, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("did not connect: %s", err)
+	}
+	defer conn.Close()
+
+	c := proto.New@service_name@Client(conn)
+
+	request := &proto.@service_request@{
+	    //Set your request here
+	}
+
+	response, err := c.Execute@title@(context.Background(), request)
+	if err != nil {
+		log.Fatalf("Error when calling @service_request@: %s", err)
+	}
+	log.Println(response)
+}

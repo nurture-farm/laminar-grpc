@@ -1,0 +1,17 @@
+package main
+
+import (
+	"log"
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
+	proto @go_proto_path@
+)
+
+const (
+	LOCAL_URL = ":@server_port@"
+)
+
+var ENV = LOCAL_URL
+
+@insert_test_clients@
+

@@ -1,0 +1,28 @@
+func (se *Executor) Execute@title@(ctx context.Context, request *fs.@service_request@) (*fs.@service_response@, error) {
+
+	model := mappers.Make@service_request@VO(request)
+	args := @title@Args(model)
+
+	var rows sql.Result
+	currQuery := database.QUERY_@title_query@
+    @sql_replace@
+	err := Driver.GetDriver().Exec(ctx, currQuery, args, &rows)
+	if err != nil {
+		logger.Error("Error could not Execute@service_request@", zap.Error(err))
+		return nil, err
+	}
+
+	insertedId, err := rows.LastInsertId()
+    if err != nil {
+        logger.Error("Error could not get lastInsertedId for @service_request@", zap.Error(err))
+        return nil, err
+    }
+
+	response :=  &fs.@service_response@{
+        Status: @response_status_success@
+        Count: 1,
+        RecordId: cast.ToString(insertedId),
+    }
+
+    return response, nil
+}

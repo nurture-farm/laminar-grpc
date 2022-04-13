@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <groupId>io.github.nurture-farm</groupId>
+    <artifactId>laminar-grpc</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.18-SNAPSHOT</version>
+    <modules>
+        <module>laminar-grpc-core</module>
+        <module>laminar-grpc-proto-generator</module>
+        <module>laminar-grpc-frontend</module>
+    </modules>
+
+    <name>laminar-grpc</name>
+    <description>laminar-grpc used by laminar-web to generated gRPC microservice in GoLang</description>
+    <url>https://Nurture.Farm</url>
+
+    <developers>
+        <developer>
+            <name>Kishan Nigam</name>
+            <organization>Nurture.Farm</organization>
+            <organizationUrl>https://Nurture.Farm</organizationUrl>
+        </developer>
+        <developer>
+            <name>Abinasha Karana</name>
+            <organization>Nurture.Farm</organization>
+            <organizationUrl>https://Nurture.Farm</organizationUrl>
+        </developer>
+        <developer>
+            <name>Gayatri Mali</name>
+            <organization>Nurture.Farm</organization>
+            <organizationUrl>https://Nurture.Farm</organizationUrl>
+        </developer>
+        <developer>
+            <name>Rajat Pachauri</name>
+            <organization>Nurture.Farm</organization>
+            <organizationUrl>https://Nurture.Farm</organizationUrl>
+        </developer>
+        <developer>
+            <name>Chirag Mittal</name>
+            <organization>Nurture.Farm</organization>
+            <organizationUrl>https://Nurture.Farm</organizationUrl>
+        </developer>
+        <developer>
+            <name>Shubham Prashar</name>
+            <organization>Nurture.Farm</organization>
+            <organizationUrl>https://Nurture.Farm</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/nurture-farm/laminar-grpc.git</connection>
+        <developerConnection>scm:git:ssh://github.com:nurture-farm/laminar-grpc.git</developerConnection>
+        <url>http://github.com/nurture-farm/laminar-grpc</url>
+    </scm>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <!-- Target Java versions -->
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.yml</exclude>
+                        <exclude>**/*.conf</exclude>
+                        <exclude>**/*.xml</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <extensions>
+            <extension>
+                <groupId>com.github.ehsaniara</groupId>
+                <artifactId>maven-repository-aws-s3</artifactId>
+                <version>1.2.11</version>
+            </extension>
+        </extensions>
+    </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+</project>

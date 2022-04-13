@@ -1,0 +1,19 @@
+                if ( queryname.equals("@service_name@") ) {
+
+                    List<String> params = new ArrayList<>();
+                    @paramInputs@
+
+                    @service_response@ resp = blockingStub.execute@service_name@(@service_request@.newBuilder().setIsStaleAllowed(false).
+
+@paramSettings@
+
+                    build());
+                    System.out.println("Response status :" + resp.getStatus() + " , count:" + resp.getCount());
+
+                    @get_records@
+                        System.out.println (
+                            @colvalues@
+                        "\n");
+                    }
+
+                } else

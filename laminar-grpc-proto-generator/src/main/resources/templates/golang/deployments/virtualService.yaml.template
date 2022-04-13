@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: @service_name_kebab@
+  namespace: @namespace@
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - @namespace@-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /@proto_package@
+      route:
+        - destination:
+            host: @service_name_kebab@-service
+            port:
+              number: @server_port@

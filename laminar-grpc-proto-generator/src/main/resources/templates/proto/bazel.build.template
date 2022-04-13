@@ -1,0 +1,59 @@
+load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
+load("@rules_java//java:defs.bzl", "java_proto_library")
+load("@io_grpc_grpc_java//:java_grpc_library.bzl", "java_grpc_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+package(default_visibility = ["//visibility:public"])
+
+# Proto definitions
+proto_library(
+    name = "@service_name_snake@_proto",
+    srcs = ["@service_name_snake@.proto"],
+    deps = [
+        "//Common:common_enums_proto",
+        "//Common:headers_proto",
+        "//Common:utils_proto",
+        "//Common:time_slot_proto",
+        "//Common:event_reference_proto",
+        "//Common:entities_proto",
+        "//Common:tags_proto",
+    ]
+)
+
+cc_proto_library(
+    name = "@service_name_snake@_cc_proto",
+    deps = [":@service_name_snake@_proto"],
+)
+
+#cc_grpc_library(
+#    name = "@service_name_snake@_cc_grpc",
+#    srcs = [":@service_name_snake@_proto"],
+#    grpc_only = True,
+#    deps = [":@service_name_snake@_cc_proto"],
+#)
+
+java_proto_library(
+    name = "@service_name_snake@_java_proto",
+    deps = [":@service_name_snake@_proto"],
+)
+
+java_grpc_library(
+    name = "@service_name_snake@_java_grpc",
+    srcs = [":@service_name_snake@_proto"],
+    deps = [":@service_name_snake@_java_proto"],
+)
+
+go_proto_library(
+    name = "@service_name_snake@_go_proto",
+
+    compiler = "@io_bazel_rules_go//proto:go_grpc",
+    importpath = "code.nurture.farm/Core/Contracts/@service_name@/Gen/Go@service_name@",
+
+    protos = [":@service_name_snake@_proto",],
+    deps = [
+        "//Common:common_enums_all_go_proto",
+    ],
+)
+

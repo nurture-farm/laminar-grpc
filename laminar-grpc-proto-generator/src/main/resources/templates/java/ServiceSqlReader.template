@@ -1,0 +1,59 @@
+package @java_package@.dao;
+
+import farm.nurture.laminar.core.sql.dao.ReadBase;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.Timestamp;
+
+public final class @service_response@Dao extends ReadBase<@service_response@VO> {
+
+	private final static Logger LOG = LoggerFactory.getLogger(@service_response@Dao.class);
+
+	public @service_response@Dao() {
+	}
+
+	@Override
+	protected final List<@service_response@VO> populate() throws SQLException {
+
+		if ( null == this.rs) {
+			LOG.warn("Rs is not initialized.");
+			throw new SQLException("Rs is not initialized.");
+		}
+
+
+		List<@service_response@VO> records = new ArrayList<>();
+
+		try {
+			while (this.rs.next()) {
+				recordsCount++;
+
+                @readerFldDefinitionContent@
+
+				@service_response@VO record =  new @service_response@VO(
+@voInitializationContent@
+				);
+
+				records.add( record );
+			}
+
+		} catch (SQLException ex){
+			throw new SQLException(ex);
+		}
+		return records;
+	}
+
+	@Override
+	protected final @service_response@VO getFirstRow() throws SQLException {
+		return null;
+	}
+
+	@Override
+    protected int getRecordsCount() {
+	    return recordsCount;
+    }
+
+}

@@ -1,0 +1,74 @@
+package service
+
+import (
+	"@code_url@@namespace@/@service_name@/zerotouch/golang/database/executor"
+	"@code_url@@namespace@/@service_name@/zerotouch/golang/metrics"
+	"@code_url@@namespace@/@service_name@/core/golang/hook"
+	fs @go_proto_path@
+	"context"
+	"fmt"
+	"go.uber.org/zap"
+)
+
+var logger *zap.Logger = getLogger()
+
+func getLogger() *zap.Logger {
+	logger, err := zap.NewProduction()
+	if err != nil {
+		panic(fmt.Sprintf("Unable to initialize logger, err: %v", err))
+	}
+	return logger
+}
+
+const (
+	@insert_constants@
+	MULTI_REQUEST = "NF_RG_MULTI_REQUEST"
+)
+
+@insert_impl@
+
+func Execute(ctx context.Context, request *fs.MultiRequests) *fs.MultiResponses {
+
+	/*var err error
+	defer executor.PushToRequestMetrics()(MULTI_REQUEST,&err,ctx)
+	logger.Info("Serving Execute request", zap.Any("request", request))
+
+	response := ExecuteRequestExecutor.onRequest(ctx, request)
+	if response != nil {
+		err = response.(error)
+	}
+	if err != nil {
+		logger.Error("Execute bad request", zap.Error(err))
+		return &fs.MultiResponses{
+			Status: &fs.Status{
+				Status: fs.StatusCode_INVALID_REQUEST,
+			},
+		}
+	}
+
+	responses := []*fs.Response{}
+	errs := executor.Execute(ctx, request)
+	for _, err := range errs {
+		if err != nil {
+			logger.Error("Execute request failed", zap.Error(err))
+			response := &fs.Response{
+				Status: &fs.Status{
+					Status: fs.StatusCode_DB_FAILURE,
+				},
+			}
+			responses = append(responses, response)
+		}
+	}
+
+	//OnDataLogic can be added here
+	//On Respponse logic can be added here
+
+	logger.Info("Execute request served successfully!", zap.Any("request", request))
+	return &fs.MultiResponses{
+		Status: &fs.Status{
+			Status: fs.StatusCode_SUCCESS,
+		},
+		Response: responses,
+	}*/
+	return nil
+}

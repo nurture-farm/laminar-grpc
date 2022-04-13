@@ -1,0 +1,45 @@
+func TestExecute@title@(t *testing.T) {
+	executorMock := &ExecutorMock{}
+	executor.RequestExecutor = &executor.GenericExecutor{
+		ServiceExecutor: executorMock,
+	}
+	metricsMock := &MetricsMock{}
+	metrics.Metrics = metricsMock
+	hookMock := &Hook@title@Mock{}
+	hook.@executor@ = &hook.Generic@executor_struct@{
+		@title@Interface: hookMock,
+	}
+	ctx := context.Background()
+
+	Status :=  &fs.Status{
+        Status: fs.StatusCode_SUCCESS,
+    }
+
+	mockedResponse :=&fs.@service_response@{
+		Status: Status,
+	}
+	request := &fs.@service_request@{}
+
+
+	metricsMock.On("PushToSummarytMetrics").Return()
+	metricsMock.On("IncrementCounterMetrics").Return()
+	executorMock.On("Execute@title@", ctx, request).Return(mockedResponse,nil).Once()
+	hookMock.On("OnRequest", ctx, request).Return(nil)
+	hookMock.On("OnResponse", ctx, request, mockedResponse).Return(nil)
+	hookMock.On("OnError", ctx, request, mockedResponse, nil).Return(nil)
+	@ondata@
+	response := service.Execute@title@(ctx,request)
+	assert := assert.New(t)
+	assert.Equal(fs.StatusCode_SUCCESS, response.Status.Status)
+
+
+	err := errors.New("Some Error")
+	mockedResponse.Status = &fs.Status{
+        Status: fs.StatusCode_DB_FAILURE,
+    }
+	executorMock.On("Execute@title@", ctx, request).Return(nil,err).Once()
+	hookMock.On("OnError", ctx, request, (*fs.@service_response@)(nil), err).Return(nil)
+	response = service.Execute@title@(ctx,request)
+	assert.Equal(fs.StatusCode_DB_FAILURE, response.Status.Status)
+}
+

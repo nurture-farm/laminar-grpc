@@ -1,0 +1,9 @@
+func (se *ExecutorMock) Execute@title@Bulk(ctx context.Context, request *fs.Bulk@service_request@) (*fs.Bulk@service_response@, error) {    
+    var @service_response@ *fs.Bulk@service_response@
+    args := se.Called(ctx,request)
+    mocked@service_response@ := args.Get(0)
+    if mocked@service_response@!=nil{
+		@service_response@ = mocked@service_response@.(*fs.Bulk@service_response@)
+	}
+	return @service_response@,args.Error(1)
+}

@@ -1,0 +1,36 @@
+package @java_package@;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class BackendControllerFactory {
+
+    private static BackendControllerFactory singleton = null;
+
+
+    public static BackendControllerFactory getInstance() {
+        if ( null != singleton ) return singleton;
+        synchronized ( BackendControllerFactory.class.getName()) {
+            if ( null != singleton ) return singleton;
+            singleton = new BackendControllerFactory();
+        }
+        return singleton;
+    }
+
+    public List<AbstractBackendController> pipelines = new ArrayList<>();
+
+    public void register(AbstractBackendController pipeline) {
+        pipelines.add(pipeline);
+    }
+
+    public int deregister(String name) {
+        for ( AbstractBackendController pipeline: pipelines) {
+            if  ( name.equals( pipeline.getName() ) ) {
+                pipelines.remove(pipeline);
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+}

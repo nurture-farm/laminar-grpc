@@ -1,0 +1,23 @@
+FROM golang:1.14.2-alpine3.11
+
+RUN apk update && apk --no-cache add ca-certificates
+
+RUN apk update && apk add tzdata
+RUN cp /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+RUN echo "Asia/Kolkata" > /etc/timezone
+
+RUN apk update && apk add git
+RUN mkdir -p @namespace@/@service_name@/
+ADD . @namespace@/@service_name@/
+
+ENV SERVICE=@service_name@
+ENV NAMESPACE=@namespace@
+ENV CONFIG_DIR=@namespace@/@service_name@/core/golang/config
+ENV ENV=dev
+WORKDIR @namespace@/@service_name@/zerotouch/golang
+
+RUN go build -o main .
+
+EXPOSE @server_port@
+EXPOSE @prometheus_port@
+CMD ["@namespace@/@service_name@/zerotouch/golang/main"]

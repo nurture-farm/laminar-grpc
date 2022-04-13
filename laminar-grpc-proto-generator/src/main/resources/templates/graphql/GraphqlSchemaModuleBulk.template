@@ -1,0 +1,14 @@
+
+       @Mutation("execute@grpc_rpcname@Bulk")
+        public ListenableFuture<Bulk@grpc_resname@> @grpc_rpcname@Bulk(
+                DataFetchingEnvironment environment,
+                Bulk@grpc_reqname@ req) {
+
+            boolean isVerified = @grpc_rpcname@OAuth(environment, req.getRequestHeaders());
+            if  ( isVerified ) return futureClient.execute@grpc_rpcname@Bulk(req);
+            else {
+                SettableFuture<Bulk@grpc_resname@> errFuture = SettableFuture.create();
+                errFuture.set(Bulk@grpc_resname@.newBuilder().setStatus(getErrorStatus(errMsg)).build());
+                return errFuture;
+            }
+        }

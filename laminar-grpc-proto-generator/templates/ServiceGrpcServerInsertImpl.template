@@ -1,0 +1,108 @@
+
+        @Override
+        public void @service_name@(WriteBase writer, AbstractBackendController.ReqRes<@service_request@, @service_response@> reqres,
+        List<AbstractBackendController.ReqRes<Request,Response>> prevSteps, ServiceContext context) {
+
+        @service_request@ request = reqres.request;
+        @service_response@.Builder replyB = null;
+        try {
+            Object[] paramValues = null;
+            @paramValues@
+            if (null == writer) writer = new WriteBase();
+            int recordsAdded = writer.execute(SqlStmts.@service_name@, paramValues );
+            String recordId = (null == writer.lastGeneratedKey ) ? "" : writer.lastGeneratedKey;
+            replyB = @service_response@.newBuilder().setStatus(OK).setRecordId(recordId).setCount(recordsAdded);
+
+
+        } catch (SQLException ex) {
+            LOG.info("ERROR while processing @service_name@", ex);
+            replyB = @service_response@.newBuilder().setStatus(
+                Status.newBuilder().setStatus(StatusCode.DB_FAILURE).addErrorMessages(ex.getMessage()).build());
+            if (BackendControllerFactory.getInstance().pipelines != null) {
+                for (AbstractBackendController pipeline : BackendControllerFactory.getInstance().pipelines)
+                    pipeline.onError@service_name@(reqres, prevSteps, context, ex);
+            }
+        } catch (Exception ex) {
+            LOG.warn("ERROR while processing @service_name@", ex);
+            replyB = @service_response@.newBuilder().setStatus(
+                Status.newBuilder().setStatus(StatusCode.UNKNOWN_ERROR).addErrorMessages(ex.getMessage()).build());
+            if (BackendControllerFactory.getInstance().pipelines != null) {
+                for (AbstractBackendController pipeline : BackendControllerFactory.getInstance().pipelines)
+                    pipeline.onError@service_name@(reqres, prevSteps, context, ex);
+            }
+
+        }
+        if ( null != replyB) reqres.response = replyB.build();
+    }
+
+    @Override
+    public void @service_name@Bulk(WriteBase writer, AbstractBackendController.ReqRes<Bulk@service_request@, Bulk@service_response@> reqres,
+        List<AbstractBackendController.ReqRes<Request,Response>> prevSteps, ServiceContext context) {
+
+
+        try {
+            Bulk@service_response@.Builder replyB = null;
+
+            int recordT = reqres.request.getRequestsCount();
+            List<Object[]> records = new ArrayList<>(recordT + 1);
+            for ( int i=0; i<recordT; i++) {
+                @service_request@ request = reqres.request.getRequests(i);
+                Object[] paramValues = null;
+                @paramValues@
+                records.add( paramValues );
+            }
+            if (null == writer) writer = new WriteBase();
+            WriteBase.BatchResponse batchResponse = writer.executeBatch(SqlStmts.@service_name@,records);
+            replyB = Bulk@service_response@.newBuilder();
+
+
+            if ( null == batchResponse) {
+
+                replyB.setCount(recordT);
+                replyB.setStatus(
+                    Status.newBuilder().setStatus(StatusCode.UNKNOWN_ERROR).addErrorMessages("No response received").build());
+
+
+            } else {
+
+                boolean isInsert = @isInsert@;
+                if ( isInsert ) {
+
+                    int responseRecordsT = 0;
+                    String[] generatedIds = batchResponse.generatedIds;
+                    int[] updateCounts = batchResponse.updateCounts;
+                    int generatedIdsT = ( null == generatedIds) ? 0 : generatedIds.length;
+                    for ( int recordIndex = 0; recordIndex < generatedIdsT; recordIndex++) {
+                        String recordId = ( null == generatedIds) ? "" : (null == generatedIds[recordIndex] ) ? "" : generatedIds[recordIndex];
+                        replyB.addResponses(@service_response@.newBuilder().setStatus(OK).
+                                setRecordId(recordId).setCount(updateCounts[recordIndex]).build());
+                    }
+
+               } else {
+                    replyB.setCount(batchResponse.total);
+                    replyB.setStatus(OK);
+                }
+            }
+            reqres.response = replyB.build();
+
+        } catch (SQLException ex) {
+            LOG.info("ERROR while processing @service_name@", ex);
+            reqres.response = Bulk@service_response@.newBuilder().setStatus(
+                Status.newBuilder().setStatus(StatusCode.DB_FAILURE).addErrorMessages(ex.getMessage()).build()).build();
+
+            if (BackendControllerFactory.getInstance().pipelines != null) {
+                for (AbstractBackendController pipeline : BackendControllerFactory.getInstance().pipelines)
+                    pipeline.onErrorBulk@service_name@(reqres, prevSteps, context, ex);
+            }
+
+        } catch (Exception ex) {
+            LOG.warn("ERROR while processing @service_name@", ex);
+            reqres.response = Bulk@service_response@.newBuilder().setStatus(
+                Status.newBuilder().setStatus(StatusCode.UNKNOWN_ERROR).addErrorMessages(ex.getMessage()).build()).build();
+
+            if (BackendControllerFactory.getInstance().pipelines != null) {
+                for (AbstractBackendController pipeline : BackendControllerFactory.getInstance().pipelines)
+                    pipeline.onErrorBulk@service_name@(reqres, prevSteps, context,  ex);
+            }
+        }
+    }
